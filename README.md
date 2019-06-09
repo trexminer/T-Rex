@@ -16,7 +16,6 @@ Full list of command line options:
                                     bcd
                                     bitcore
                                     c11
-                                    dedal
                                     geek
                                     hmq1725
                                     jeonghash
@@ -89,7 +88,7 @@ Full list of command line options:
 
 ## JSON config file
 
-To start T-Rex with config file `config.txt` type in the console: `t-rex -c config.txt`. Use `config_example` file as a starting point to create your own config.
+To start T-Rex with config file `config.txt` type in the console: `t-rex -c config.txt`. Use `config_example` file as a starting point to create your own config. You can also use environment variables: simply put `%YOUR_ENV_VAR%` anywhere in your config file and it will get automatically substituted with the value of `YOUR_ENV_VAR` variable at run-time.
 
 ## Watchdog
 
