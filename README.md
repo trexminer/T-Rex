@@ -134,7 +134,7 @@ You can use this handler for automatization purposes like changing config at run
 To activate the handler navigate to `http://127.0.0.1:4067/summary` using a web browser.
 
 Response example with comments:
-```
+``` json5
 {
   // Number of accepted shares count
   "accepted_count": 6,
@@ -328,14 +328,13 @@ To disable: `http://127.0.0.1:4067/control?time-limit=0`. If you prefer POST set
 
   If you prefer POST set the request body to `{"name": "test.txt", "data": "some sort of text data"}`
 
+## Antivirus alerts
+
+In order to protect the miner from reverse engineering attacks, the binaries are packed using a third-party software which mangles the original machine code. As a result, some antivirus engines may detect certain signatures within the executable that are similar to those that real viruses protected by the same packer have. In any case, it is advisable not to use cryptocurrency miners on the computers where you store your sensitive data (wallets, passwords etc.).
+
 ## Tips
 
-In order to maximise the hashrate our software utilises all
-available GPU resources, so it is important that you review your overclock
-settings before you start mining. Our general recommendation is to start
-from GPU stock settings	(no overclock, default power limit), and then after
-making sure it is stable, slowly increase your overclock to find the
-"sweet spot" where the miner performs at its best and still does not crash.
+In order to maximise the hashrate our software utilises all available GPU resources, so it is important that you review your overclock settings before you start mining. Our general recommendation is to start from GPU stock settings	(no overclock, default power limit), and then after making sure it is stable, slowly increase your overclock to find the "sweet spot" where the miner performs at its best and still does not crash.
 
 ## Support
 
