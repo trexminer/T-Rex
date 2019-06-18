@@ -18,6 +18,7 @@ Full list of command line options:
                                     c11
                                     geek
                                     hmq1725
+                                    honeycomb
                                     jeonghash
                                     lyra2z
                                     mtp
