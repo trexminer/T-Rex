@@ -106,6 +106,9 @@ Common example of request structure: `http://your_ip:your_port/handler_name`
 * **trex** - Shows miner control monitoring page in your web browser. You can see miner stats realtime and also change miner parameters and config on the fly. Also here you will see updates in case it appears.
 To activate the handler navigate to `http://127.0.0.1:4067/trex` using a web browser.
 
+* **log** Displays the contents of the log file (if configured).
+To activate the handler navigate to `http://127.0.0.1:4067/log` using a web browser.
+
 * **config** - Changes your config on HDD and also change some miner parameters on the fly.
 You can change multiple parameters with one request. GET and POST requests supported.
 If you use config (started miner like this: t-rex.exe -c config_file) then any action with handler "config" will be saved into selected config_file.
