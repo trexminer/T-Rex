@@ -16,6 +16,7 @@ Full list of command line options:
                                     bcd
                                     bitcore
                                     c11
+                                    dedal
                                     geek
                                     hmq1725
                                     honeycomb
@@ -30,6 +31,7 @@ Full list of command line options:
                                     sha256t
                                     skunk
                                     sonoa
+                                    tensority
                                     timetravel
                                     tribus
                                     x16r
