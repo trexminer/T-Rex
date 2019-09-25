@@ -34,8 +34,10 @@ Full list of command line options:
                                     tensority
                                     timetravel
                                     tribus
+                                    x11r
                                     x16r
                                     x16rt
+                                    x16rv2
                                     x16s
                                     x17
                                     x21s
@@ -84,6 +86,11 @@ Full list of command line options:
         --exit-on-cuda-error       Forces miner to immediately exit on CUDA error.
         --exit-on-connection-lost  Forces miner to immediately exit on connection lost.
         --reconnect-on-fail-shares Forces miner to immediately reconnect to pool on N successively failed shares (default: 10).
+        --fork-at                  Forces miner to change algorithm on predefined condition.
+                                   Time condition: algo_name=YYYY-MM-DDTHH:MM:SS (eg: --fork-at x16rv2=2019-10-01T16:00:00).
+                                   Time must be set in UTC+0.
+                                   Block condition: algo_name=integer_block_number (eg: --fork-at x16rv2=6526421).
+                                   To change main pool port you must write it right after algo: algo_name:integer_port_number (eg: --fork-at x16rv2:4081=2019-10-01T16:00:00).
 
         --version                  Display version information and exit.
     -h, --help                     Display this help text and exit.
