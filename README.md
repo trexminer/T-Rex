@@ -11,39 +11,45 @@ Developer fee is 1% (3% for Tensority).
 Full list of command line options:
 ```
     -a, --algo                     Specify the hash algorithm to use.
-                                    astralhash
-                                    balloon
-                                    bcd
-                                    bitcore
-                                    c11
-                                    dedal
-                                    geek
-                                    hmq1725
-                                    honeycomb
-                                    jeonghash
-                                    kawpow
-                                    lyra2z
-                                    mtp
-                                    padihash
-                                    pawelhash
-                                    phi
-                                    polytimos
-                                    sha256q
-                                    sha256t
-                                    skunk
-                                    sonoa
-                                    tensority
-                                    timetravel
-                                    tribus
-                                    x11r
-                                    x16r
-                                    x16rt
-                                    x16rv2
-                                    x16s
-                                    x17
-                                    x21s
-                                    x22i
-                                    x25x
+                                   alterhash
+                                   astralhash
+                                   balloon
+                                   bcd
+                                   bitcore
+                                   c11
+                                   dedal
+                                   geek
+                                   hmq1725
+                                   honeycomb
+                                   jeonghash
+                                   kawpow
+                                   lyra2z
+                                   mtp
+                                   mtp-tcr
+                                   padihash
+                                   pawelhash
+                                   phi
+                                   polytimos
+                                   progpow
+                                   sha256q
+                                   sha256t
+                                   skunk
+                                   sonoa
+                                   tensority
+                                   timetravel
+                                   tribus
+                                   x11r
+                                   x16r
+                                   x16rt
+                                   x16rv2
+                                   x16s
+                                   x17
+                                   x21s
+                                   x22i
+                                   x25x
+        --coin                     [ProgPOW] Set coin name.
+        --nonce-start              [ProgPOW] Starting nonce for the solution search.
+        --nonce-range-size         [ProgPOW] Nonce range size for nonce search. The range will be split between all devices.
     -d, --devices                  Comma separated list of CUDA devices to use.
                                    Device IDs start counting from 0.
         --ab-indexing              Afterburner indexing (Sort devices by bus ID. First device starts with 1).
@@ -74,7 +80,7 @@ Full list of command line options:
         --no-color                 Disable color output for console.
         --no-nvml                  Disable NVML GPU stats.
         --no-watchdog              Disable built-in watchdog.
-    
+
     -B, --benchmark                Benchmark mode.
     -P, --protocol-dump            User protocol logging.
     -c, --config                   Load a JSON-format configuration file.
@@ -87,11 +93,14 @@ Full list of command line options:
         --exit-on-cuda-error       Forces miner to immediately exit on CUDA error.
         --exit-on-connection-lost  Forces miner to immediately exit on connection lost.
         --reconnect-on-fail-shares Forces miner to immediately reconnect to pool on N successively failed shares (default: 10).
+
         --fork-at                  Forces miner to change algorithm on predefined condition.
                                    Time condition: algo_name=YYYY-MM-DDTHH:MM:SS (eg: --fork-at x16rv2=2019-10-01T16:00:00).
                                    Time must be set in UTC+0.
                                    Block condition: algo_name=integer_block_number (eg: --fork-at x16rv2=6526421).
-                                   To change main pool port you must write it right after algo: algo_name:integer_port_number (eg: --fork-at x16rv2:4081=2019-10-01T16:00:00).
+                                   To change main pool port you must write it right after algo: algo_name:integer_port_number
+                                   (eg: --fork-at x16rv2:4081=2019-10-01T16:00:00).
+
 
         --version                  Display version information and exit.
     -h, --help                     Display this help text and exit.
