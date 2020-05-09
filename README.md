@@ -21,6 +21,7 @@ Full list of command line options:
                                     hmq1725
                                     honeycomb
                                     jeonghash
+                                    kawpow
                                     lyra2z
                                     mtp
                                     padihash
