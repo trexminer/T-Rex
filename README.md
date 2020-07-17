@@ -112,7 +112,7 @@ To start T-Rex with config file `config.txt` type in the console: `t-rex -c conf
 
 ## Watchdog
 
-Watchdog is intended to observe miner state and restart T-Rex if it crashes or hungs for any reason.
+Watchdog is intended to observe miner state and restart T-Rex if it crashes or hangs for any reason.
 Also, watchdog can optionally perform auto updates if a newer version is available.
 We recommend using the watchdog to avoid any downtime in mining and make sure your GPUs are busy 24/7.
 If you do need to disable the watchdog, you can do so using `--no-watchdog` parameter.
