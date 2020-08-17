@@ -101,6 +101,14 @@ Full list of command line options:
                                    To change main pool port you must write it right after algo: algo_name:integer_port_number
                                    (eg: --fork-at x16rv2:4081=2019-10-01T16:00:00).
 
+        --mt                       Memory tweak mode (default: 0 - disabled). Range from 0 to 6. General recommendation
+                                   is to start with 1, and then increase only if the GPU is stable.
+                                   The effect is similar to that of ETHlargementPill.
+                                   Supported on graphics cards with GDDR5 or GDDR5X memory only.
+                                   Requires running the miner with administrative privileges.
+                                   Can be set to a comma separated list to apply different values to different cards.
+                                   Example: --mt 4 (applies tweak mode #4 to all cards that support this functionality)
+                                            --mt 3,3,3,0 (applies tweak mode #3 to all cards except the last one)
 
         --version                  Display version information and exit.
     -h, --help                     Display this help text and exit.
