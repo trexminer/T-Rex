@@ -54,6 +54,9 @@ Full list of command line options:
                                    Device IDs start counting from 0.
         --ab-indexing              Afterburner indexing (Sort devices by bus ID. First device starts with 1).
     -i, --intensity                GPU intensity 8-25 (default: auto).
+        --low-load                 Low load mode (default: 0). 1 - enabled, 0 - disabled.
+                                   Reduces the load on the GPUs if possible. Can be set to a comma separated string to enable
+                                   the mode for a subset of the GPU list (eg: --low-load 0,0,1,0)
 
     -o, --url                      URL of mining server.
     -u, --user                     Username for mining server.
