@@ -18,6 +18,7 @@ Full list of command line options:
                                    bitcore
                                    c11
                                    dedal
+                                   ethash
                                    geek
                                    hmq1725
                                    honeycomb
@@ -31,6 +32,7 @@ Full list of command line options:
                                    phi
                                    polytimos
                                    progpow
+                                   progpowz
                                    sha256q
                                    sha256t
                                    skunk
@@ -52,11 +54,17 @@ Full list of command line options:
         --nonce-range-size         [ProgPOW] Nonce range size for nonce search. The range will be split between all devices.
     -d, --devices                  Comma separated list of CUDA devices to use.
                                    Device IDs start counting from 0.
-        --ab-indexing              Afterburner indexing (Sort devices by bus ID. First device starts with 1).
+        --pci-indexing             Sort devices by PCI bus ID. Device IDs start with 0.
+        --ab-indexing              Afterburner indexing (same as --pci-indexing but starts from 1).
     -i, --intensity                GPU intensity 8-25 (default: auto).
         --low-load                 Low load mode (default: 0). 1 - enabled, 0 - disabled.
                                    Reduces the load on the GPUs if possible. Can be set to a comma separated string to enable
                                    the mode for a subset of the GPU list (eg: --low-load 0,0,1,0)
+        --gpu-init-mode            Enables DAG sequential initialization (default: 0).
+                                   0 - all GPUs are initialized in parallel
+                                   1 - fully sequential initialization, one GPU at a time
+                                   2 - two GPUs at a time
+                                   etc.
 
     -o, --url                      URL of mining server.
     -u, --user                     Username for mining server.
