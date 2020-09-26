@@ -49,6 +49,7 @@ Full list of command line options:
                                    x21s
                                    x22i
                                    x25x
+                                   x33
         --coin                     [ProgPOW] Set coin name.
         --nonce-start              [ProgPOW] Starting nonce for the solution search.
         --nonce-range-size         [ProgPOW] Nonce range size for nonce search. The range will be split between all devices.
@@ -60,15 +61,35 @@ Full list of command line options:
         --low-load                 Low load mode (default: 0). 1 - enabled, 0 - disabled.
                                    Reduces the load on the GPUs if possible. Can be set to a comma separated string to enable
                                    the mode for a subset of the GPU list (eg: --low-load 0,0,1,0)
+        --kernel                   Choose kernel for Ethash (default: 0). Range from 0 to 3.
+                                   Set to 0 to enable auto-tuning: the miner will benchmark each kernel and select the fastest.
+                                   Can be set to a comma separated list to apply different values to different cards.
+                                   (eg: --kernel 2,1,1,3)
+                                   The support for this parameter may later be extended to cover other algorithms.
         --gpu-init-mode            Enables DAG sequential initialization (default: 0).
                                    0 - all GPUs are initialized in parallel
                                    1 - fully sequential initialization, one GPU at a time
                                    2 - two GPUs at a time
                                    etc.
 
-    -o, --url                      URL of mining server.
+    -o, --url                      URL of the mining pool in the following format: <scheme>://<host>:<port>
+                                   Supported schemes: stratum+tcp
+                                                      stratum+ssl
+                                                      stratum2+tcp
+                                                      stratum2+ssl
+                                   stratum2 is normally used by Nicehash, MiningPoolHub and other similar mining pools
+                                   Example: stratum+tcp://eu1.ethermine.org:4444
+                                            stratum+ssl://zcoin.mintpond.com:3005
+                                            stratum2+tcp://daggerhashimoto.hk.nicehash.com:3353
     -u, --user                     Username for mining server.
+                                   If the username contains a dot (.) it is used as a separator between the wallet
+                                   address and the worker name. If this behaviour is undesirable, set the worker name
+                                   explicitly using "--worker" parameter. In that case the username will not be parsed,
+                                   and will be sent to the pool as it is.
     -p, --pass                     Password for mining server.
+        --worker                   Worker name.
+                                   Can be useful in case the username contains a dot (.) that should not be treated
+                                   as a separator.
     -r, --retries                  Number of times to retry if a network call fails.
     -R, --retry-pause              Pause in seconds between retries.
     -T, --timeout                  Network timeout, in seconds (default: 300)
