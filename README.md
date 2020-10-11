@@ -25,6 +25,8 @@ Full list of command line options:
                                    jeonghash
                                    kawpow
                                    lyra2z
+                                   megabtx
+                                   megamec
                                    mtp
                                    mtp-tcr
                                    padihash
@@ -32,6 +34,8 @@ Full list of command line options:
                                    phi
                                    polytimos
                                    progpow
+                                   progpow-veil
+                                   progpow-veriblock
                                    progpowz
                                    sha256q
                                    sha256t
