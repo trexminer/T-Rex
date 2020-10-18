@@ -11,7 +11,6 @@ Developer fee is 1% (3% for Tensority).
 Full list of command line options:
 ```
     -a, --algo                     Specify the hash algorithm to use.
-                                   alterhash
                                    astralhash
                                    balloon
                                    bcd
@@ -54,7 +53,9 @@ Full list of command line options:
                                    x22i
                                    x25x
                                    x33
-        --coin                     [ProgPOW] Set coin name.
+        --coin                     [Ethash, ProgPOW] Set coin name.
+                                   Helps avoid DAG rebuilds when switching back from a dev fee session.
+                                   Example: "eth" for Ethereum, "etc" for Ethereum Classic.
         --nonce-start              [ProgPOW] Starting nonce for the solution search.
         --nonce-range-size         [ProgPOW] Nonce range size for nonce search. The range will be split between all devices.
     -d, --devices                  Comma separated list of CUDA devices to use.
@@ -116,6 +117,18 @@ Full list of command line options:
         --no-color                 Disable color output for console.
         --no-nvml                  Disable NVML GPU stats.
         --no-watchdog              Disable built-in watchdog.
+        --watchdog-exit-mode       Specifies the action "A" the watchdog should take if the miner gets restarted "N" times
+                                   within "M" minutes.
+                                   Format: N:M:A. Valid values:
+                                                  N: any positive integer,
+                                                  M: any positive integer,
+                                                  A: r(system reboot), s(system shutdown), e(miner exit)
+                                   Actions "r" and "s" require running the miner with administrative privileges.
+                                   Examples:
+                                   20:10:s - watchdog will shutdown the system if the miner gets restarted 20 times
+                                             within any 10 minute interval
+                                   5:7:r   - watchdog will reboot the system if the miner gets restarted 5 times
+                                             within any 7 minute interval
 
     -B, --benchmark                Benchmark mode.
     -P, --protocol-dump            User protocol logging.
