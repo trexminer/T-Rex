@@ -66,7 +66,7 @@ Full list of command line options:
         --low-load                 Low load mode (default: 0). 1 - enabled, 0 - disabled.
                                    Reduces the load on the GPUs if possible. Can be set to a comma separated string to enable
                                    the mode for a subset of the GPU list (eg: --low-load 0,0,1,0)
-        --kernel                   Choose kernel for Ethash (default: 0). Range from 0 to 3.
+        --kernel                   Choose kernel for Ethash (default: 0). Range from 0 to 5.
                                    Set to 0 to enable auto-tuning: the miner will benchmark each kernel and select the fastest.
                                    Can be set to a comma separated list to apply different values to different cards.
                                    (eg: --kernel 2,1,1,3)
@@ -92,7 +92,7 @@ Full list of command line options:
                                    explicitly using "--worker" parameter. In that case the username will not be parsed,
                                    and will be sent to the pool as it is.
     -p, --pass                     Password for mining server.
-        --worker                   Worker name.
+    -w, --worker                   Worker name.
                                    Can be useful in case the username contains a dot (.) that should not be treated
                                    as a separator.
     -r, --retries                  Number of times to retry if a network call fails.
@@ -131,6 +131,7 @@ Full list of command line options:
                                              within any 7 minute interval
 
     -B, --benchmark                Benchmark mode.
+        --benchmark-epoch          Epoch number used during benchmark (only for algorithms that generate DAG).
     -P, --protocol-dump            User protocol logging.
     -c, --config                   Load a JSON-format configuration file.
     -l, --log-path                 Full path of the log file.
