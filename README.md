@@ -17,6 +17,7 @@ Full list of command line options:
                                    bitcore
                                    c11
                                    dedal
+                                   etchash
                                    ethash
                                    geek
                                    hmq1725
