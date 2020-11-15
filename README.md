@@ -1,4 +1,4 @@
-# T-Rex NVIDIA GPU miner
+# T-Rex NVIDIA GPU miner (Ethash/Kawpow/MTP)
 
 ## Overview
 
