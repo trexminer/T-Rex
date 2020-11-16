@@ -1,4 +1,4 @@
-# T-Rex NVIDIA GPU miner (Ethash/Kawpow/MTP)
+# T-Rex NVIDIA GPU miner (Ethash / Kawpow / MTP)
 
 ## Overview
 
@@ -56,7 +56,9 @@ Full list of command line options:
                                    x33
         --coin                     [Ethash, ProgPOW] Set coin name.
                                    Helps avoid DAG rebuilds when switching back from a dev fee session.
-                                   Example: "eth" for Ethereum, "etc" for Ethereum Classic.
+                                   Example: "eth" for Ethereum, "zil" for Zilliqa.
+        --extra-dag-epoch          Allocate extra DAG at GPU for specified epoch. Can be useful for dual mining
+                                   of coins like Zilliqa (ZIL). (eg: --extra-dag-epoch 0)
         --nonce-start              [ProgPOW] Starting nonce for the solution search.
         --nonce-range-size         [ProgPOW] Nonce range size for nonce search. The range will be split between all devices.
     -d, --devices                  Comma separated list of CUDA devices to use.
@@ -88,14 +90,9 @@ Full list of command line options:
                                             stratum+ssl://zcoin.mintpond.com:3005
                                             stratum2+tcp://daggerhashimoto.hk.nicehash.com:3353
     -u, --user                     Username for mining server.
-                                   If the username contains a dot (.) it is used as a separator between the wallet
-                                   address and the worker name. If this behaviour is undesirable, set the worker name
-                                   explicitly using "--worker" parameter. In that case the username will not be parsed,
-                                   and will be sent to the pool as it is.
     -p, --pass                     Password for mining server.
     -w, --worker                   Worker name.
-                                   Can be useful in case the username contains a dot (.) that should not be treated
-                                   as a separator.
+
     -r, --retries                  Number of times to retry if a network call fails.
     -R, --retry-pause              Pause in seconds between retries.
     -T, --timeout                  Network timeout, in seconds (default: 300)
@@ -163,11 +160,94 @@ Full list of command line options:
 
         --version                  Display version information and exit.
     -h, --help                     Display this help text and exit.
+
 ```
+
+### Examples
+* **ETH+ZIL-shardpool**</br>
+```
+t-rex -a ethash -o stratum+tcp://eu1-zil.shardpool.io:3333 -u 0x1f75eccd8fbddf057495b96669ac15f8e296c2cd -p zil1yn92lnkkfsn0s2hlvfdmz6y2yhpqm98vng38s9@eu1.ethermine.org:4444 -w rig0 --extra-dag-epoch 0
+```
+
+* **ETC-2miners**</br>
+```
+t-rex -a ethash --coin etc -o stratum+tcp://etc.2miners.com:1010 -u 0x1f75eccd8fbddf057495b96669ac15f8e296c2cd -p x -w rig0 --fork-at etchash=11700000
+```
+
+* **ETH-2miners**</br>
+```
+t-rex -a ethash -o stratum+tcp://eth.2miners.com:2020 -u 0x1f75eccd8fbddf057495b96669ac15f8e296c2cd -p x -w rig0
+```
+
+* **ETH-ethermine**</br>
+```
+t-rex -a ethash -o stratum+tcp://eu1.ethermine.org:4444 -u 0x1f75eccd8fbddf057495b96669ac15f8e296c2cd -p x -w rig0
+```
+
+* **ETH-miningpoolhub**</br>
+```
+t-rex -a ethash -o stratum2+tcp://europe.ethash-hub.miningpoolhub.com:20535 -u somaton.gtx1080 -p x
+```
+
+* **ETH-miningrigrentals**</br>
+```
+t-rex -a ethash -o stratum+tcp://eu-ru01.miningrigrentals.com:3344 -u wasya89.165854 -p x
+```
+
+* **ETH-woolypooly**</br>
+```
+t-rex -a ethash -o stratum+tcp://eth.woolypooly.com:3096 -u 0x1f75eccd8fbddf057495b96669ac15f8e296c2cd -p x -w rig0
+```
+
+* **RVN-2miners**</br>
+```
+t-rex -a kawpow -o stratum+tcp://rvn.2miners.com:6060 -u RBX1G6nYDMHVtyaZiQWySMZw1Bb2DEDpT8.rig -p x
+```
+
+* **RVN-ravenminer**</br>
+```
+t-rex -a kawpow -o stratum+tcp://stratum.ravenminer.com:3838 -u RBX1G6nYDMHVtyaZiQWySMZw1Bb2DEDpT8.rig -p x
+```
+
+* **RVN-woolypooly**</br>
+```
+t-rex -a kawpow -o stratum+tcp://rvn.woolypooly.com:55555 -u RBX1G6nYDMHVtyaZiQWySMZw1Bb2DEDpT8.rig -p x
+```
+
+* **SERO-woolypooly**</br>
+```
+t-rex -a progpow --coin sero -o stratum+tcp://sero.woolypooly.com:8008 -u JCbZnEb8XtWV814QWRpDcDxpQpXZXw4ARneAtwXNYdd3reuo4xQDcuZivopA761QnQyfMermHR9Mpi156F5n7ez9tv75Wt7vWbHXtuyZsQVWLbKNHnZgwcXbR2yZmbw89WT -p x -w rig0
+```
+
+* **VEIL-woolypooly**</br>
+```
+t-rex -a progpow-veil -o stratum+tcp://veil.woolypooly.com:3098 -u bv1qzftz0vuqa82zy29avylv8sclskweqsrwysgrkg -p x -w rig0
+```
+
+* **XZC-2miners**</br>
+```
+t-rex -a mtp -o stratum+tcp://xzc.2miners.com:8080 -u aBR3GY8eBKvEwjrVgNgSWZsteJPpFDqm6U.rig0 -p x
+```
+
+* **XZC-mintpond**</br>
+```
+t-rex -a mtp -o stratum+ssl://zcoin.mintpond.com:3005 -u aBR3GY8eBKvEwjrVgNgSWZsteJPpFDqm6U.rig0 -p x
+```
+
+* **XZC-woolypooly**</br>
+```
+t-rex -a mtp -o stratum+tcp://zcoin.woolypooly.com:3080 -u aBR3GY8eBKvEwjrVgNgSWZsteJPpFDqm6U.rig0 -p x
+```
+
+
 
 ## JSON config file
 
-To start T-Rex with config file `config.txt` type in the console: `t-rex -c config.txt`. Use `config_example` file as a starting point to create your own config. You can also use environment variables: simply put `%YOUR_ENV_VAR%` anywhere in your config file and it will get automatically substituted with the value of `YOUR_ENV_VAR` variable at run-time.
+To start T-Rex with config file `config.txt` type in the console: `t-rex -c config.txt`.
+Use `config_example` file as a starting point to create your own config.</br>
+If a parameter is set in the config file and also via cmd line, the latter takes precedence,
+for example: `t-rex -c config.txt -w <worker_name_to_override_the_one_in_config_file>` </br>
+You can also use environment variables: simply put `%YOUR_ENV_VAR%` anywhere in your config file and it will get automatically substituted with the value of `YOUR_ENV_VAR` variable at run-time.
 
 ## Watchdog
 
@@ -179,40 +259,42 @@ If you do need to disable the watchdog, you can do so using `--no-watchdog` para
 ## HTTP API
 
 By default HTTP API server binds to `0.0.0.0:4067`. It means that you can access your miner via both external and internal network interfaces.
-Common example of request structure: `http://your_ip:your_port/handler_name`
+Common example of request structure: `http://<ip>:<port>/<handler_name>`
 
-* **trex** - Shows miner control monitoring page in your web browser. You can see miner stats realtime and also change miner parameters and config on the fly. Also here you will see updates in case it appears.
-To activate the handler navigate to `http://127.0.0.1:4067/trex` using a web browser.
+Handlers:
+* **trex** - Shows miner control monitoring page in your web browser.<br/>
+  You can see miner stats in real time and also change miner parameters and config on the fly. Aside from that you will also see any available updates.
 
-* **log** Displays the contents of the log file (if configured).
-To activate the handler navigate to `http://127.0.0.1:4067/log` using a web browser.
 
-* **config** - Changes your config on HDD and also change some miner parameters on the fly.
-You can change multiple parameters with one request. GET and POST requests supported.
-If you use config (started miner like this: t-rex.exe -c config_file) then any action with handler "config" will be saved into selected config_file.
-You can use this handler for automatization purposes like changing config at runtime, shutting down the miner via API and then restarting it with new parameters applied.
+* **log** - Displays the contents of the log file (if configured).
+
+
+* **config** - Changes your config on HDD and also change some miner parameters on the fly.<br/>
+  You can change multiple parameters with one request. Both GET and POST requests supported.<br/>
+  If you use a config file (e.g. `t-rex.exe -c config_file`), then any action with handler `config` will be saved into `config_file`.<br/>
+  You can use this handler for automation like changing config file at run-time, shutting down the miner via API and then restarting it with new parameters applied.
 
   GET usage examples:
-  1) `http://127.0.0.1:4067/config?protocol-dump=true` - Enables protocol dump on the fly and write it into config_file
+    * `http://127.0.0.1:4067/config?protocol-dump=true` <br/>
+      Enables protocol dump on the fly and write it into config_file
+    * `http://127.0.0.1:4067/config?algo=x16r&devices=0,1&intensity=20,21` <br/>
+      Writes the following config settings into the config file: `algo=x16r`, `devices=0,1`, `intensity=20,21`
+    * `http://127.0.0.1:4067/config?algo=x16r&devices=0,1&intensity=20,21&config=test.conf` <br/>
+      Saves settings into the file `test.conf` which will be created in the folder where the miner resides: `algo=x16r`, `devices=0,1`, `intensity=20,21`
+    * `http://127.0.0.1:4067/config?config=test.conf` <br/>
+      Saves your current miner settings into `test.conf` file
+    * `http://127.0.0.1:4067/config` <br/>
+      Shows the current config state
+    * `http://127.0.0.1:4067/config?hashrate_avr=10&temperature-limit=70&temperature-start=40` <br/>
+      Sets the following parameters on the fly: `hashrate_avr=10`, `temperature-limit=70`, `temperature-start=40`
 
-  2) `http://127.0.0.1:4067/config?algo=x16r&devices=0,1&intensity=20,21` - Will write the following config settings into the config file: `algo=x16r`, `devices=0,1`, `intensity=20,21`
+  For POST requests you must use correct json object with parameters you want to change:<br/>
+  URL: `http://127.0.0.1:4067/config`. <br/>
+  Payload: `{"hashrate_avr": 10, "temperature-limit": 70, "temperature-start": 40}`.<br/>
+  Parameter names and types in json are identical to config json you normally use.
 
-  3) `http://127.0.0.1:4067/config?algo=x16r&devices=0,1&intensity=20,21&config=test.conf` - Saves settings into the file `test.conf` which will be created in the folder where the miner resides. `algo=x16r`, `devices=0,1`, `intensity=20,21`
 
-  4) `http://127.0.0.1:4067/config?config=test.conf` - Saves your current miner settings into `test.conf` file
-
-  5) `http://127.0.0.1:4067/config` - Shows the current config state
-
-  6) `http://127.0.0.1:4067/config?hashrate_avr=10&temperature-limit=70&temperature-start=40` - Sets the following parameters on the fly: `hashrate_avr=10`, `temperature-limit=70`, `temperature-start=40`
-
-  For POST requests you must use correct json object with parameters you want to change.
-  
-  URL: `http://127.0.0.1:4067/config`.
-  Payload: `{"hashrate_avr": 10, "temperature-limit": 70, "temperature-start": 40}`.
-  Parameters' names and types in json are identical to config json you normally use.
-
-* **summary** Shows all information about current mining process.
-To activate the handler navigate to `http://127.0.0.1:4067/summary` using a web browser.
+* **summary** - Shows all information about current mining process.
 
 Response example with comments:
 ``` json5
@@ -378,32 +460,32 @@ Response example with comments:
 }
 ```
 
-* **do-update** Activate download update service.
-To start T-Rex update type in the following into your browser address bar and hit Enter:
-`http://127.0.0.1:4067/do-update`.
-To stop update type in the following into your browser address bar and hit Enter:
-`http://127.0.0.1:4067/do-update?stop=true`
+* **do-update** - Updates the miner.<br/>
+  Navigate to `http://127.0.0.1:4067/do-update` to start T-Rex update.<br/>
+  Navigate to `http://127.0.0.1:4067/do-update?stop=true` to stop the update.
 
-* **control** Real time configuration of T-Rex miner.
-As of API 1.3 version there are following commands supported.
 
-  _shutdown_ - Shuts down your miner. Usage: `http://127.0.0.1:4067/control?command=shutdown`. If you prefer POST set the request body to `{"command": "shutdown"}`.
+* **control** - Real time configuration of T-Rex miner.<br/>
+  As of API 1.3 version the following commands are supported:
 
-  _hashrate-avr_ - Changes sliding window size in real time. Usage: `http://127.0.0.1:4067/control?hashrate-avr=1`.
-It will set sliding window of size 1 sec. If you prefer POST set the request body to `{"hashrate-avr": 1}`.
+  * _shutdown_ - Shuts down your miner. Usage: `http://127.0.0.1:4067/control?command=shutdown`. If you prefer POST set the request body to `{"command": "shutdown"}`.
 
-  _gpu-report-interval_ - Changes frequency of GPUs reports appearance in log. Usage: `http://127.0.0.1:4067/control?gpu-report-interval=10`. Now you will see GPUs stats every 10th share. If you prefer POST set the request body to `{"gpu-report-interval": 10}`. Btw, you can disable stats (enter quiet mode) by setting gpu-report-interval to 0.
+  * _hashrate-avr_ - Changes sliding window size in real time. Usage: `http://127.0.0.1:4067/control?hashrate-avr=1`.
+  It will set sliding window of size 1 sec. If you prefer POST set the request body to `{"hashrate-avr": 1}`.
 
-  _no-color_ - Disables color output to console. Usage: `http://127.0.0.1:4067/control?no-color=true`. To enable: `http://127.0.0.1:4067/control?no-color=false`.
-If you prefer POST set the request body to `{"no-color": true}`.
+  * _gpu-report-interval_ - Changes frequency of GPUs reports appearance in log. Usage: `http://127.0.0.1:4067/control?gpu-report-interval=10`. Now you will see GPUs stats every 10th share. If you prefer POST set the request body to `{"gpu-report-interval": 10}`. Btw, you can disable stats (enter quiet mode) by setting gpu-report-interval to 0.
 
-  _protocol-dump_ - Enables user protocol dump into console/log. To enable: `http://127.0.0.1:4067/control?protocol-dump=true`. To disable: `http://127.0.0.1:4067/control?protocol-dump=false`.
-If you prefer POST set the request body to `{"protocol-dump": true}`.
+  * _no-color_ - Disables color output to console. Usage: `http://127.0.0.1:4067/control?no-color=true`. To enable: `http://127.0.0.1:4067/control?no-color=false`.
+  If you prefer POST set the request body to `{"no-color": true}`.
 
-  _time-limit_ - Sets time limit in seconds for miner (it will shutdown after timeout). Usage: `http://127.0.0.1:4067/control?time-limit=120`. It will shutdown your miner 120 seconds after this request.
-To disable: `http://127.0.0.1:4067/control?time-limit=0`. If you prefer POST set the request body to `{"time-limit": 120}`.
+  * _protocol-dump_ - Enables user protocol dump into console/log. To enable: `http://127.0.0.1:4067/control?protocol-dump=true`. To disable: `http://127.0.0.1:4067/control?protocol-dump=false`.
+  If you prefer POST set the request body to `{"protocol-dump": true}`.
 
-* **file** Creates a file in directory with the miner. This may be useful for external monitoring utilities or scripts which can take commands from this file and do some sort of useful stuff like overclock or system reconfiguration.
+  * _time-limit_ - Sets time limit in seconds for miner (it will shutdown after timeout). Usage: `http://127.0.0.1:4067/control?time-limit=120`. It will shutdown your miner 120 seconds after this request.
+  To disable: `http://127.0.0.1:4067/control?time-limit=0`. If you prefer POST set the request body to `{"time-limit": 120}`.
+
+* **file** - Creates a file in the same directory where the miner executable is.<br/>
+  This is useful for external monitoring utilities or scripts which can take commands from this file and do some useful stuff like overclock or system reconfiguration.
 
   `http://127.0.0.1:4067/file?name=test.txt&data=some_sort_of_text_data`
 
