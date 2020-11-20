@@ -59,8 +59,8 @@ Full list of command line options:
                                    Example: "eth" for Ethereum, "zil" for Zilliqa.
         --extra-dag-epoch          Allocate extra DAG at GPU for specified epoch. Can be useful for dual mining
                                    of coins like Zilliqa (ZIL). (eg: --extra-dag-epoch 0)
-        --nonce-start              [ProgPOW] Starting nonce for the solution search.
-        --nonce-range-size         [ProgPOW] Nonce range size for nonce search. The range will be split between all devices.
+        --nonce-start              [Ethash, ProgPOW] Starting nonce for the solution search.
+        --nonce-range-size         [Ethash, ProgPOW] Nonce range size for nonce search. The range will be split between all devices.
     -d, --devices                  Comma separated list of CUDA devices to use.
                                    Device IDs start counting from 0.
         --pci-indexing             Sort devices by PCI bus ID. Device IDs start with 0.
@@ -69,7 +69,7 @@ Full list of command line options:
         --low-load                 Low load mode (default: 0). 1 - enabled, 0 - disabled.
                                    Reduces the load on the GPUs if possible. Can be set to a comma separated string to enable
                                    the mode for a subset of the GPU list (eg: --low-load 0,0,1,0)
-        --kernel                   Choose kernel for Ethash (default: 0). Range from 0 to 5.
+        --kernel                   [Ethash] Choose CUDA kernel (default: 0). Range from 0 to 5.
                                    Set to 0 to enable auto-tuning: the miner will benchmark each kernel and select the fastest.
                                    Can be set to a comma separated list to apply different values to different cards.
                                    (eg: --kernel 2,1,1,3)
@@ -114,6 +114,7 @@ Full list of command line options:
         --hide-date                Don't show date in console.
         --no-color                 Disable color output for console.
         --no-nvml                  Disable NVML GPU stats.
+        --no-strict-ssl            Disable certificate validation for SSL connections.
         --no-watchdog              Disable built-in watchdog.
         --watchdog-exit-mode       Specifies the action "A" the watchdog should take if the miner gets restarted "N" times
                                    within "M" minutes.
@@ -142,12 +143,13 @@ Full list of command line options:
         --exit-on-connection-lost  Forces miner to immediately exit on connection lost.
         --reconnect-on-fail-shares Forces miner to immediately reconnect to pool on N successively failed shares (default: 10).
 
-        --fork-at                  Forces miner to change algorithm on predefined condition.
-                                   Time condition: algo_name=YYYY-MM-DDTHH:MM:SS (eg: --fork-at x16rv2=2019-10-01T16:00:00).
-                                   Time must be set in UTC+0.
-                                   Block condition: algo_name=integer_block_number (eg: --fork-at x16rv2=6526421).
-                                   To change main pool port you must write it right after algo: algo_name:integer_port_number
-                                   (eg: --fork-at x16rv2:4081=2019-10-01T16:00:00).
+        --fork-at                  Forces miner to change algorithm on predefined condition (works only with built-in watchdog enabled)
+                                   Epoch condition: <algo_name>=epoch:<epoch_number> (eg: --fork-at etchash=epoch:390).
+                                   Block condition: <algo_name>=block:<block_number> (eg: --fork-at x16rv2=block:6526421).
+                                   Time condition:  <algo_name>=time:<YYYY-MM-DDTHH:MM:SS>. Time must be set in UTC+0.
+                                   (eg: --fork-at x16rv2=time:2019-10-01T16:00:00).
+                                   To change main pool port you must write it right after algo: <algo_name>:<port_number>
+                                   (eg: --fork-at x16rv2:4081=time:2019-10-01T16:00:00).
 
         --mt                       Memory tweak mode (default: 0 - disabled). Range from 0 to 6. General recommendation
                                    is to start with 1, and then increase only if the GPU is stable.
@@ -171,7 +173,7 @@ t-rex -a ethash -o stratum+tcp://eu1-zil.shardpool.io:3333 -u 0x1f75eccd8fbddf05
 
 * **ETC-2miners**</br>
 ```
-t-rex -a ethash --coin etc -o stratum+tcp://etc.2miners.com:1010 -u 0x1f75eccd8fbddf057495b96669ac15f8e296c2cd -p x -w rig0 --fork-at etchash=11700000
+t-rex -a ethash --coin etc -o stratum+tcp://etc.2miners.com:1010 -u 0x1f75eccd8fbddf057495b96669ac15f8e296c2cd -p x -w rig0 --fork-at etchash=epoch:390
 ```
 
 * **ETH-2miners**</br>
