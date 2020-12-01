@@ -4,7 +4,7 @@
 
 T-Rex is a versatile cryptocurrency mining software. It supports a variety of algorithms and we, as developers, are trying to do our best to make it as	fast and as convenient to use as possible.
 
-Developer fee is 1% (3% for Tensority).
+Developer fee is 1% (2% for Octopus).
 
 ## Usage
 
@@ -29,6 +29,7 @@ Full list of command line options:
                                    megamec
                                    mtp
                                    mtp-tcr
+                                   octopus
                                    padihash
                                    pawelhash
                                    phi
@@ -109,7 +110,6 @@ Full list of command line options:
 
     -N, --hashrate-avr             Sliding window length in seconds used to compute average hashrate (default: 60).
         --sharerate-avr            Sliding window length in seconds used to compute sharerate (default: 600).
-        --gpu-report-interval      GPU stats report frequency. (default: 5. every 5th share)
     -q, --quiet                    Quiet mode. No GPU stats at all.
         --hide-date                Don't show date in console.
         --no-color                 Disable color output for console.
@@ -173,7 +173,12 @@ t-rex -a ethash -o stratum+tcp://eu1-zil.shardpool.io:3333 -u 0x1f75eccd8fbddf05
 
 * **ETC-2miners**</br>
 ```
-t-rex -a ethash --coin etc -o stratum+tcp://etc.2miners.com:1010 -u 0x1f75eccd8fbddf057495b96669ac15f8e296c2cd -p x -w rig0 --fork-at etchash=epoch:390
+t-rex -a etchash -o stratum+tcp://etc.2miners.com:1010 -u 0x1f75eccd8fbddf057495b96669ac15f8e296c2cd -p x -w rig0
+```
+
+* **ETC-woolypooly**</br>
+```
+t-rex -a etchash -o stratum+tcp://etc.woolypooly.com:35000 -u 0x1f75eccd8fbddf057495b96669ac15f8e296c2cd -p x -w rig0
 ```
 
 * **ETH-2miners**</br>
@@ -199,6 +204,11 @@ t-rex -a ethash -o stratum+tcp://eu-ru01.miningrigrentals.com:3344 -u wasya89.16
 * **ETH-woolypooly**</br>
 ```
 t-rex -a ethash -o stratum+tcp://eth.woolypooly.com:3096 -u 0x1f75eccd8fbddf057495b96669ac15f8e296c2cd -p x -w rig0
+```
+
+* **CFX-woolypooly**</br>
+```
+t-rex -a octopus -o stratum+tcp://cfx.woolypooly.com:3094 -u 0x100851451584c1e808fde4a2d077dd81129b2555 -p x -w rig0
 ```
 
 * **RVN-2miners**</br>
@@ -474,8 +484,6 @@ Response example with comments:
 
   * _hashrate-avr_ - Changes sliding window size in real time. Usage: `http://127.0.0.1:4067/control?hashrate-avr=1`.
   It will set sliding window of size 1 sec. If you prefer POST set the request body to `{"hashrate-avr": 1}`.
-
-  * _gpu-report-interval_ - Changes frequency of GPUs reports appearance in log. Usage: `http://127.0.0.1:4067/control?gpu-report-interval=10`. Now you will see GPUs stats every 10th share. If you prefer POST set the request body to `{"gpu-report-interval": 10}`. Btw, you can disable stats (enter quiet mode) by setting gpu-report-interval to 0.
 
   * _no-color_ - Disables color output to console. Usage: `http://127.0.0.1:4067/control?no-color=true`. To enable: `http://127.0.0.1:4067/control?no-color=false`.
   If you prefer POST set the request body to `{"no-color": true}`.
