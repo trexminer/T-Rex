@@ -80,6 +80,7 @@ Full list of command line options:
                                    1 - fully sequential initialization, one GPU at a time
                                    2 - two GPUs at a time
                                    etc.
+        --keep-gpu-busy            Continue mining even in case of connection loss.
 
     -o, --url                      URL of the mining pool in the following format: <scheme>://<host>:<port>
                                    Supported schemes: stratum+tcp
@@ -106,15 +107,18 @@ Full list of command line options:
 
     -b, --api-bind-telnet          IP:port for the miner API via telnet (default: 0.0.0.0:4068). Set to 0 to disable.
         --api-bind-http            IP:port for the miner API via HTTP (default: 0.0.0.0:4067). Set to 0 to disable.
+        --api-read-only            Allow only read operations for API calls.
     -J  --json-response            Telnet API server will make json responses.
 
     -N, --hashrate-avr             Sliding window length in seconds used to compute average hashrate (default: 60).
         --sharerate-avr            Sliding window length in seconds used to compute sharerate (default: 600).
+        --gpu-report-interval      GPU stats report frequency. Minimum is 5 sec. (default: 30 sec)
     -q, --quiet                    Quiet mode. No GPU stats at all.
         --hide-date                Don't show date in console.
         --no-color                 Disable color output for console.
         --no-nvml                  Disable NVML GPU stats.
         --no-strict-ssl            Disable certificate validation for SSL connections.
+        --no-hashrate-report       Disable hashrate report to pool.
         --no-watchdog              Disable built-in watchdog.
         --watchdog-exit-mode       Specifies the action "A" the watchdog should take if the miner gets restarted "N" times
                                    within "M" minutes.
