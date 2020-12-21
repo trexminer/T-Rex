@@ -190,6 +190,11 @@ t-rex -a etchash -o stratum+tcp://etc.woolypooly.com:35000 -u 0x1f75eccd8fbddf05
 t-rex -a ethash -o stratum+tcp://eth.2miners.com:2020 -u 0x1f75eccd8fbddf057495b96669ac15f8e296c2cd -p x -w rig0
 ```
 
+* **ETH-nanopool**</br>
+```
+t-rex -a ethash -o stratum+tcp://eth-eu1.nanopool.org:9999 -u 0x1f75eccd8fbddf057495b96669ac15f8e296c2cd.rig0/some@email.org -p x
+```
+
 * **ETH-ethermine**</br>
 ```
 t-rex -a ethash -o stratum+tcp://eu1.ethermine.org:4444 -u 0x1f75eccd8fbddf057495b96669ac15f8e296c2cd -p x -w rig0
@@ -212,7 +217,12 @@ t-rex -a ethash -o stratum+tcp://eth.woolypooly.com:3096 -u 0x1f75eccd8fbddf0574
 
 * **CFX-woolypooly**</br>
 ```
-t-rex -a octopus -o stratum+tcp://cfx.woolypooly.com:3094 -u 0x100851451584c1e808fde4a2d077dd81129b2555 -p x -w rig0
+t-rex -a octopus -o stratum+tcp://cfx.woolypooly.com:3094 -u 0x100851451584c1e808fde4a2d077dd81129b2555.rig0 -p x
+```
+
+* **CFX-nanopool**</br>
+```
+t-rex -a octopus -o stratum+tcp://cfx-eu1.nanopool.org:17777 -u 0x100851451584c1e808fde4a2d077dd81129b2555.rig0/some@email.org -p x
 ```
 
 * **RVN-2miners**</br>
