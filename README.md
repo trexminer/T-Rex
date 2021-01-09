@@ -113,6 +113,7 @@ Full list of command line options:
     -N, --hashrate-avr             Sliding window length in seconds used to compute average hashrate (default: 60).
         --sharerate-avr            Sliding window length in seconds used to compute sharerate (default: 600).
         --gpu-report-interval      GPU stats report frequency. Minimum is 5 sec. (default: 30 sec)
+        --gpu-report-interval-s    GPU stats report frequency in shares. 0 by default (disabled).
     -q, --quiet                    Quiet mode. No GPU stats at all.
         --hide-date                Don't show date in console.
         --no-color                 Disable color output for console.
@@ -495,6 +496,8 @@ Response example with comments:
   As of API 1.3 version the following commands are supported:
 
   * _shutdown_ - Shuts down your miner. Usage: `http://127.0.0.1:4067/control?command=shutdown`. If you prefer POST set the request body to `{"command": "shutdown"}`.
+  
+  * _pause_ - Stops your miner. Usage: `http://127.0.0.1:4067/control?pause=true` ; to resume use: `http://127.0.0.1:4067/control?pause=false`.
 
   * _hashrate-avr_ - Changes sliding window size in real time. Usage: `http://127.0.0.1:4067/control?hashrate-avr=1`.
   It will set sliding window of size 1 sec. If you prefer POST set the request body to `{"hashrate-avr": 1}`.
