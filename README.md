@@ -29,6 +29,7 @@ Full list of command line options:
                                    megamec
                                    mtp
                                    mtp-tcr
+                                   multi
                                    octopus
                                    padihash
                                    pawelhash
@@ -80,6 +81,12 @@ Full list of command line options:
                                    1 - fully sequential initialization, one GPU at a time
                                    2 - two GPUs at a time
                                    etc.
+        --dag-build-mode           [Ethash, ProgPOW, Octopus] Controls how DAG is built (default: 0).
+                                   0 - auto (miner will choose the most appropriate mode based on the GPU model)
+                                   1 - default (suitable for most graphics cards)
+                                   2 - recommended for 30xx cards to prevent invalid shares
+                                   Can be set to a comma separated list to apply different values to different cards.
+                                   (eg: --dag-build-mode 1,1,2,1)
         --keep-gpu-busy            Continue mining even in case of connection loss.
 
     -o, --url                      URL of the mining pool in the following format: <scheme>://<host>:<port>
@@ -164,6 +171,13 @@ Full list of command line options:
                                    Can be set to a comma separated list to apply different values to different cards.
                                    Example: --mt 4 (applies tweak mode #4 to all cards that support this functionality)
                                             --mt 3,3,3,0 (applies tweak mode #3 to all cards except the last one)
+
+        --script-start             Executes user script right after miner start (eg: --script-start path_to_user_script)
+        --script-epoch-change      Executes user script on epoch change.
+        --script-crash             Executes user script in case of miner crash.
+        --script-low-hash          Executes user script in case of low hash. Hash threshold is set in MegaHashes/second.
+                                   Example: --script-low-hash script_to_activate:50
+                                            (activates "script_to_activate" script once total hashrate drops to 50MH/s)
 
         --version                  Display version information and exit.
     -h, --help                     Display this help text and exit.
