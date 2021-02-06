@@ -255,6 +255,11 @@ t-rex -a kawpow -o stratum+tcp://stratum.ravenminer.com:3838 -u RBX1G6nYDMHVtyaZ
 t-rex -a kawpow -o stratum+tcp://rvn.woolypooly.com:55555 -u RBX1G6nYDMHVtyaZiQWySMZw1Bb2DEDpT8.rig -p x
 ```
 
+* **RVN-suprnova**</br>
+```
+t-rex -a kawpow -o stratum+tcp://rvn.suprnova.cc:8888 -u RBX1G6nYDMHVtyaZiQWySMZw1Bb2DEDpT8.rig -p x
+```
+
 * **SERO-woolypooly**</br>
 ```
 t-rex -a progpow --coin sero -o stratum+tcp://sero.woolypooly.com:8008 -u JCbZnEb8XtWV814QWRpDcDxpQpXZXw4ARneAtwXNYdd3reuo4xQDcuZivopA761QnQyfMermHR9Mpi156F5n7ez9tv75Wt7vWbHXtuyZsQVWLbKNHnZgwcXbR2yZmbw89WT -p x -w rig0
