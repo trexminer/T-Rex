@@ -173,6 +173,7 @@ Full list of command line options:
                                             --mt 3,3,3,0 (applies tweak mode #3 to all cards except the last one)
 
         --script-start             Executes user script right after miner start (eg: --script-start path_to_user_script)
+        --script-exit              Executes user script right before miner exit.
         --script-epoch-change      Executes user script on epoch change.
         --script-crash             Executes user script in case of miner crash.
         --script-low-hash          Executes user script in case of low hash. Hash threshold is set in MegaHashes/second.
@@ -228,6 +229,11 @@ t-rex -a ethash -o stratum+tcp://eu-ru01.miningrigrentals.com:3344 -u wasya89.16
 * **ETH-woolypooly**</br>
 ```
 t-rex -a ethash -o stratum+tcp://eth.woolypooly.com:3096 -u 0x1f75eccd8fbddf057495b96669ac15f8e296c2cd -p x -w rig0
+```
+
+* **ETH-flexpool**</br>
+```
+t-rex -a ethash -o stratum+ssl://eth-us-east.flexpool.io:5555 -u 0x1f75eccd8fbddf057495b96669ac15f8e296c2cd -p x -w rig0
 ```
 
 * **CFX-woolypooly**</br>
@@ -512,6 +518,8 @@ Response example with comments:
   * _shutdown_ - Shuts down your miner. Usage: `http://127.0.0.1:4067/control?command=shutdown`. If you prefer POST set the request body to `{"command": "shutdown"}`.
   
   * _pause_ - Stops your miner. Usage: `http://127.0.0.1:4067/control?pause=true` ; to resume use: `http://127.0.0.1:4067/control?pause=false`.
+  
+  To pause certain GPUs: `http://127.0.0.1:4067/control?pause=true:0,2,3` ; to resume use: `http://127.0.0.1:4067/control?pause=false:0,2,3`.
 
   * _hashrate-avr_ - Changes sliding window size in real time. Usage: `http://127.0.0.1:4067/control?hashrate-avr=1`.
   It will set sliding window of size 1 sec. If you prefer POST set the request body to `{"hashrate-avr": 1}`.
