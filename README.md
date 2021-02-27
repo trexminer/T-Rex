@@ -29,6 +29,7 @@ Full list of command line options:
                                    megamec
                                    mtp
                                    mtp-tcr
+                                   multi
                                    octopus
                                    padihash
                                    pawelhash
@@ -80,6 +81,12 @@ Full list of command line options:
                                    1 - fully sequential initialization, one GPU at a time
                                    2 - two GPUs at a time
                                    etc.
+        --dag-build-mode           [Ethash, ProgPOW, Octopus] Controls how DAG is built (default: 0).
+                                   0 - auto (miner will choose the most appropriate mode based on the GPU model)
+                                   1 - default (suitable for most graphics cards)
+                                   2 - recommended for 30xx cards to prevent invalid shares
+                                   Can be set to a comma separated list to apply different values to different cards.
+                                   (eg: --dag-build-mode 1,1,2,1)
         --keep-gpu-busy            Continue mining even in case of connection loss.
 
     -o, --url                      URL of the mining pool in the following format: <scheme>://<host>:<port>
@@ -105,14 +112,19 @@ Full list of command line options:
         --temperature-limit        GPU shutdown temperature. (default: 0 - disabled)
         --temperature-start        GPU temperature to enable card after disable. (default: 0 - disabled)
 
-    -b, --api-bind-telnet          IP:port for the miner API via telnet (default: 0.0.0.0:4068). Set to 0 to disable.
-        --api-bind-http            IP:port for the miner API via HTTP (default: 0.0.0.0:4067). Set to 0 to disable.
+    -b, --api-bind-telnet          IP:port for the miner API via telnet (default: 127.0.0.1:4068). Set to 0 to disable.
+                                   For external access set IP to 0.0.0.0, in which case setting "--api-read-only" is
+                                   recommended as well.
+        --api-bind-http            IP:port for the miner API via HTTP (default: 127.0.0.1:4067). Set to 0 to disable.
+                                   For external access set IP to 0.0.0.0, in which case setting "--api-read-only" is
+                                   recommended as well.
         --api-read-only            Allow only read operations for API calls.
     -J  --json-response            Telnet API server will make json responses.
 
     -N, --hashrate-avr             Sliding window length in seconds used to compute average hashrate (default: 60).
         --sharerate-avr            Sliding window length in seconds used to compute sharerate (default: 600).
         --gpu-report-interval      GPU stats report frequency. Minimum is 5 sec. (default: 30 sec)
+        --gpu-report-interval-s    GPU stats report frequency in shares. 0 by default (disabled).
     -q, --quiet                    Quiet mode. No GPU stats at all.
         --hide-date                Don't show date in console.
         --no-color                 Disable color output for console.
@@ -163,6 +175,14 @@ Full list of command line options:
                                    Can be set to a comma separated list to apply different values to different cards.
                                    Example: --mt 4 (applies tweak mode #4 to all cards that support this functionality)
                                             --mt 3,3,3,0 (applies tweak mode #3 to all cards except the last one)
+
+        --script-start             Executes user script right after miner start (eg: --script-start path_to_user_script)
+        --script-exit              Executes user script right before miner exit.
+        --script-epoch-change      Executes user script on epoch change.
+        --script-crash             Executes user script in case of miner crash.
+        --script-low-hash          Executes user script in case of low hash. Hash threshold is set in MegaHashes/second.
+                                   Example: --script-low-hash script_to_activate:50
+                                            (activates "script_to_activate" script once total hashrate drops to 50MH/s)
 
         --version                  Display version information and exit.
     -h, --help                     Display this help text and exit.
@@ -217,7 +237,12 @@ t-rex -a ethash -o stratum+tcp://eth.woolypooly.com:3096 -u 0x1f75eccd8fbddf0574
 
 * **ETH-binance**</br>
 ```
-t-rex -a ethash -o stratum+tcp://ethash.poolbinance.com:443 -u MiningAccountName -p 123456 -w rig0
+t-rex -a ethash -o stratum+tcp://ethash.poolbinance.com:443 -u MiningAccountName -w rig0
+```
+
+* **ETH-flexpool**</br>
+```
+t-rex -a ethash -o stratum+ssl://eth-us-east.flexpool.io:5555 -u 0x1f75eccd8fbddf057495b96669ac15f8e296c2cd -p x -w rig0
 ```
 
 * **CFX-woolypooly**</br>
@@ -500,6 +525,9 @@ Response example with comments:
   As of API 1.3 version the following commands are supported:
 
   * _shutdown_ - Shuts down your miner. Usage: `http://127.0.0.1:4067/control?command=shutdown`. If you prefer POST set the request body to `{"command": "shutdown"}`.
+  
+  * _pause_ - Stops your miner. Usage: `http://127.0.0.1:4067/control?pause=true` ; to resume use: `http://127.0.0.1:4067/control?pause=false`. <br/>
+  To pause certain GPUs: `http://127.0.0.1:4067/control?pause=true:0,2,3` ; to resume use: `http://127.0.0.1:4067/control?pause=false:0,2,3`.
 
   * _hashrate-avr_ - Changes sliding window size in real time. Usage: `http://127.0.0.1:4067/control?hashrate-avr=1`.
   It will set sliding window of size 1 sec. If you prefer POST set the request body to `{"hashrate-avr": 1}`.
