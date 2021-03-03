@@ -556,6 +556,15 @@ In order to protect the miner from reverse engineering attacks, the binaries are
 
 In order to maximise the hashrate our software utilises all available GPU resources, so it is important that you review your overclock settings before you start mining. Our general recommendation is to start from GPU stock settings	(no overclock, default power limit), and then after making sure it is stable, slowly increase your overclock to find the "sweet spot" where the miner performs at its best and still does not crash.
 
+As general practice on Windows OS, creating a folder and then making an exception to that folder on windows defender and antivirus programs will allow the miner binaries to be downloaded to that folder and executed without issues or being blocked/deleted by either. 
+
+Cuda support and what miner release to use:
+Check your PC to verify what drivers and cuda version you have installed and select the correct miner binary that is marked for that cuda version. A nice visual how-to for finding the cuda version and how to manually install other versions of cuda can be found on Medium [HERE](https://medium.com/analytics-vidhya/cuda-toolkit-on-windows-10-20244437e036). For general information see [Nvidia CUDA compatibility documentation](https://docs.nvidia.com/deploy/cuda-compatibility/index.html#support-hardware) for the most up to date documents on cuda compatability. General rule of thumb is to use the most recent drivers so that the latest CUDA is also installed. 
+
+Cuda 9.2: Typically Maxwell GPU (EX: GTX 980)
+Cuda 10.0: Typically Pascal GPU (EX: GTX 1070/1080ti gpu)
+Cuda 11.1: Typically Ampere/Turing GPU (EX: RTX 3060ti)
+
 ## Support
 
 Discord:
