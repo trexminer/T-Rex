@@ -92,6 +92,7 @@ Full list of command line options:
     -o, --url                      URL of the mining pool in the following format: <scheme>://<host>:<port>
                                    Supported schemes: stratum+tcp
                                                       stratum+ssl
+                                                      stratum+http
                                                       stratum2+tcp
                                                       stratum2+ssl
                                    stratum2 is normally used by Nicehash, MiningPoolHub and other similar mining pools
@@ -128,9 +129,10 @@ Full list of command line options:
     -q, --quiet                    Quiet mode. No GPU stats at all.
         --hide-date                Don't show date in console.
         --no-color                 Disable color output for console.
+        --no-clean-job             Don't drop stale shares.
+        --no-hashrate-report       Disable hashrate report to pool.
         --no-nvml                  Disable NVML GPU stats.
         --no-strict-ssl            Disable certificate validation for SSL connections.
-        --no-hashrate-report       Disable hashrate report to pool.
         --no-watchdog              Disable built-in watchdog.
         --watchdog-exit-mode       Specifies the action "A" the watchdog should take if the miner gets restarted "N" times
                                    within "M" minutes.
@@ -208,6 +210,11 @@ t-rex -a etchash -o stratum+tcp://etc.woolypooly.com:35000 -u 0x1f75eccd8fbddf05
 * **ETH-2miners**</br>
 ```
 t-rex -a ethash -o stratum+tcp://eth.2miners.com:2020 -u 0x1f75eccd8fbddf057495b96669ac15f8e296c2cd -p x -w rig0
+```
+
+* **ETH-ethproxy**</br>
+```
+t-rex -a ethash -o stratum+http://127.0.0.1:8080
 ```
 
 * **ETH-nanopool**</br>
@@ -536,12 +543,6 @@ Response example with comments:
   * _time-limit_ - Sets time limit in seconds for miner (it will shutdown after timeout). Usage: `http://127.0.0.1:4067/control?time-limit=120`. It will shutdown your miner 120 seconds after this request.
   To disable: `http://127.0.0.1:4067/control?time-limit=0`. If you prefer POST set the request body to `{"time-limit": 120}`.
 
-* **file** - Creates a file in the same directory where the miner executable is.<br/>
-  This is useful for external monitoring utilities or scripts which can take commands from this file and do some useful stuff like overclock or system reconfiguration.
-
-  `http://127.0.0.1:4067/file?name=test.txt&data=some_sort_of_text_data`
-
-  If you prefer POST set the request body to `{"name": "test.txt", "data": "some sort of text data"}`
 
 ## Antivirus alerts
 
