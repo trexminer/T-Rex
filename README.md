@@ -128,8 +128,10 @@ Full list of command line options:
         --gpu-report-interval-s    GPU stats report frequency in shares. 0 by default (disabled).
     -q, --quiet                    Quiet mode. No GPU stats at all.
         --hide-date                Don't show date in console.
+        --send-stales              Don't drop stale shares.
+        --validate-shares          Validate shares before sending to a pool. Also enables share diff info.
+
         --no-color                 Disable color output for console.
-        --no-clean-job             Don't drop stale shares.
         --no-hashrate-report       Disable hashrate report to pool.
         --no-nvml                  Disable NVML GPU stats.
         --no-strict-ssl            Disable certificate validation for SSL connections.
@@ -188,6 +190,13 @@ Full list of command line options:
 
         --version                  Display version information and exit.
     -h, --help                     Display this help text and exit.
+
+
+    ------------------ GPU fine tuning for Windows only ------------------
+                                   All options can be set to a comma separated list to apply different values to
+                                   different cards.
+        --fan                      Set fan speed in percent. Must be within [0, 100] range. (default: 0 - disabled)
+
 
 ```
 
