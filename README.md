@@ -11,51 +11,18 @@ Developer fee is 1% (2% for Octopus).
 Full list of command line options:
 ```
     -a, --algo                     Specify the hash algorithm to use.
-                                   astralhash
-                                   balloon
-                                   bcd
-                                   bitcore
-                                   c11
-                                   dedal
                                    etchash
                                    ethash
-                                   geek
-                                   hmq1725
-                                   honeycomb
-                                   jeonghash
                                    kawpow
-                                   lyra2z
-                                   megabtx
-                                   megamec
                                    mtp
                                    mtp-tcr
                                    multi
                                    octopus
-                                   padihash
-                                   pawelhash
-                                   phi
-                                   polytimos
                                    progpow
                                    progpow-veil
                                    progpow-veriblock
                                    progpowz
-                                   sha256q
-                                   sha256t
-                                   skunk
-                                   sonoa
                                    tensority
-                                   timetravel
-                                   tribus
-                                   x11r
-                                   x16r
-                                   x16rt
-                                   x16rv2
-                                   x16s
-                                   x17
-                                   x21s
-                                   x22i
-                                   x25x
-                                   x33
         --coin                     [Ethash, ProgPOW] Set coin name.
                                    Helps avoid DAG rebuilds when switching back from a dev fee session.
                                    Example: "eth" for Ethereum, "zil" for Zilliqa.
@@ -68,6 +35,8 @@ Full list of command line options:
         --pci-indexing             Sort devices by PCI bus ID. Device IDs start with 0.
         --ab-indexing              Afterburner indexing (same as --pci-indexing but starts from 1).
     -i, --intensity                GPU intensity 8-25 (default: auto).
+                                   Controls the GPU workload size, in other words how many nonces the miner is
+                                   processing "in one go": N = 2 ^ intensity
         --low-load                 Low load mode (default: 0). 1 - enabled, 0 - disabled.
                                    Reduces the load on the GPUs if possible. Can be set to a comma separated string to enable
                                    the mode for a subset of the GPU list (eg: --low-load 0,0,1,0)
@@ -174,7 +143,7 @@ Full list of command line options:
         --mt                       Memory tweak mode (default: 0 - disabled). Range from 0 to 6. General recommendation
                                    is to start with 1, and then increase only if the GPU is stable.
                                    The effect is similar to that of ETHlargementPill.
-                                   Supported on graphics cards with GDDR5 or GDDR5X memory only.
+                                   Supported on Pascal GPUs with GDDR5 or GDDR5X memory only.
                                    Requires running the miner with administrative privileges.
                                    Can be set to a comma separated list to apply different values to different cards.
                                    Example: --mt 4 (applies tweak mode #4 to all cards that support this functionality)
@@ -192,10 +161,19 @@ Full list of command line options:
     -h, --help                     Display this help text and exit.
 
 
+
     ------------------ GPU fine tuning for Windows only ------------------
+
                                    All options can be set to a comma separated list to apply different values to
-                                   different cards.
-        --fan                      Set fan speed in percent. Must be within [0, 100] range. (default: 0 - disabled)
+                                   different cards. (default value for all options: 0 - not used)
+        --fan                      Sets GPU fan speed in percent. Must be within [0, 100] range.
+        --pl                       Sets GPU power limit in percent. Must be within [0, 100] range.
+        --cclock                   Sets GPU core clock offset in MHz.
+                                   Requires running the miner with administrative privileges.
+                                   Will be set to 0 on exit and during DAG rebuild.
+        --mclock                   Sets GPU memory clock offset in MHz.
+                                   Requires running the miner with administrative privileges.
+                                   Will be set to 0 on exit and during DAG rebuild.
 
 
 ```
@@ -258,12 +236,12 @@ t-rex -a ethash -o stratum+ssl://eth-us-east.flexpool.io:5555 -u 0x1f75eccd8fbdd
 
 * **CFX-woolypooly**</br>
 ```
-t-rex -a octopus -o stratum+tcp://cfx.woolypooly.com:3094 -u 0x100851451584c1e808fde4a2d077dd81129b2555.rig0 -p x
+t-rex -a octopus -o stratum+tcp://cfx.woolypooly.com:3094 -u 0x1f75eccd8fbddf057495b96669ac15f8e296c2cd.rig0 -p x
 ```
 
 * **CFX-nanopool**</br>
 ```
-t-rex -a octopus -o stratum+tcp://cfx-eu1.nanopool.org:17777 -u 0x100851451584c1e808fde4a2d077dd81129b2555.rig0/some@email.org -p x
+t-rex -a octopus -o stratum+tcp://cfx-eu1.nanopool.org:17777 -u 0x1f75eccd8fbddf057495b96669ac15f8e296c2cd.rig0/some@email.org -p x
 ```
 
 * **RVN-2miners**</br>
@@ -325,7 +303,8 @@ If you do need to disable the watchdog, you can do so using `--no-watchdog` para
 
 ## HTTP API
 
-By default HTTP API server binds to `0.0.0.0:4067`. It means that you can access your miner via both external and internal network interfaces.
+By default HTTP API server binds to `127.0.0.1:4067`. It means that you can only access your miner from localhost.
+See `--api-bind-http` parameter on how to change it.
 Common example of request structure: `http://<ip>:<port>/<handler_name>`
 
 Handlers:
@@ -415,7 +394,7 @@ Response example with comments:
     "fan_speed": 66,                       
 
     // User defined device id in config
-    "gpu_id": 0,                        
+    "gpu_user_id": 0,                        
 
     // Average hashrate per N sec defined in config
     "hashrate": 4529054,                   
@@ -445,7 +424,15 @@ Response example with comments:
     "disabled":true,                       
 
     // Device temperature at disable. Might appear if device reached heat limit.
-    "disabled_at_temperature": 77
+    "disabled_at_temperature": 77,
+    
+    // Shares stat for the device.
+    "shares": {
+        "accepted_count": 3,
+        "invalid_count": 0,
+        "rejected_count": 0,
+        "solved_count": 0
+    }
   }],
   
   // Total average sum of hashrates for all active devices per N sec defined in config.
