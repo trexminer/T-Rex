@@ -28,6 +28,7 @@ Full list of command line options:
                                    Example: "eth" for Ethereum, "zil" for Zilliqa.
         --extra-dag-epoch          Allocate extra DAG at GPU for specified epoch. Can be useful for dual mining
                                    of coins like Zilliqa (ZIL). (eg: --extra-dag-epoch 0)
+                                   Can be set for each GPU separately by using comma separated list of values.
         --nonce-start              [Ethash, ProgPOW] Starting nonce for the solution search.
         --nonce-range-size         [Ethash, ProgPOW] Nonce range size for nonce search. The range will be split between all devices.
     -d, --devices                  Comma separated list of CUDA devices to use.
@@ -166,7 +167,13 @@ Full list of command line options:
 
                                    All options can be set to a comma separated list to apply different values to
                                    different cards. (default value for all options: 0 - not used)
-        --fan                      Sets GPU fan speed in percent. Must be within [0, 100] range.
+        --fan                      Sets GPU fan speed in percent or target temperature (auto-fan).
+                                   Valid formats:
+                                      --fan N   (where N is the fan speed)
+                                      --fan t:N (where N is the target temperature)
+                                   Example: --fan 45,t:67
+                                      GPU #0: set fan speed to 45%
+                                      GPU #1: maintain GPU core temperature at 67C
         --pl                       Sets GPU power limit in percent. Must be within [0, 100] range.
         --cclock                   Sets GPU core clock offset in MHz.
                                    Requires running the miner with administrative privileges.
