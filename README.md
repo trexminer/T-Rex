@@ -28,7 +28,8 @@ Full list of command line options:
                                    Example: "eth" for Ethereum, "zil" for Zilliqa.
         --extra-dag-epoch          Allocate extra DAG at GPU for specified epoch. Can be useful for dual mining
                                    of coins like Zilliqa (ZIL). (eg: --extra-dag-epoch 0)
-                                   Can be set for each GPU separately by using comma separated list of values.
+                                   Can be set for each GPU separately by using comma separated list of values
+                                   (set to -1 for the GPUs that should not allocate the extra DAG).
         --nonce-start              [Ethash, ProgPOW] Starting nonce for the solution search.
         --nonce-range-size         [Ethash, ProgPOW] Nonce range size for nonce search. The range will be split between all devices.
     -d, --devices                  Comma separated list of CUDA devices to use.
@@ -131,6 +132,8 @@ Full list of command line options:
                                    Parameter is set in seconds. (default: 600)
         --exit-on-cuda-error       Forces miner to immediately exit on CUDA error.
         --exit-on-connection-lost  Forces miner to immediately exit on connection lost.
+        --exit-on-high-power       Forces miner to immediately exit on high power consumption.
+                                   (eg: --exit-on-high-power 600 - exit in case of total power consumption exceeds 600W)
         --reconnect-on-fail-shares Forces miner to immediately reconnect to pool on N successively failed shares (default: 10).
 
         --fork-at                  Forces miner to change algorithm on predefined condition (works only with built-in watchdog enabled)
@@ -174,6 +177,7 @@ Full list of command line options:
                                    Example: --fan 45,t:67
                                       GPU #0: set fan speed to 45%
                                       GPU #1: maintain GPU core temperature at 67C
+                                   Note: fan speeds are limited to [5%; 95%] range in auto-fan mode.
         --pl                       Sets GPU power limit in percent. Must be within [0, 100] range.
         --cclock                   Sets GPU core clock offset in MHz.
                                    Requires running the miner with administrative privileges.
