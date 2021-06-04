@@ -144,6 +144,21 @@ Full list of command line options:
                                    To change main pool port you must write it right after algo: <algo_name>:<port_number>
                                    (eg: --fork-at x16rv2:4081=time:2019-10-01T16:00:00).
 
+        --script-start             Executes user script right after miner start (eg: --script-start path_to_user_script)
+        --script-exit              Executes user script right before miner exit.
+        --script-epoch-change      Executes user script on epoch change.
+        --script-crash             Executes user script in case of miner crash.
+        --script-low-hash          Executes user script in case of low hash. Hash threshold is set in MegaHashes/second.
+                                   Example: --script-low-hash script_to_activate:50
+                                            (activates "script_to_activate" script once total hashrate drops to 50MH/s)
+
+    ------------------ GPU fine tuning (Windows & Linux) ----------------
+
+        --lock-cclock              Specifies desired locked GPU core clock speed in MHz. (default: 0 - disabled).
+                                   Requires running the miner with administrative privileges.
+                                   Example: --lock-cclock 1000 (applies clock 1000Mhz to all cards that support this functionality)
+                                            --lock-cclock 1000,1300,0 (applies clock 1000Mhz to GPU #0, 1300MHz to GPU #1, ignore GPU #2)
+
         --mt                       Memory tweak mode (default: 0 - disabled). Range from 0 to 6. General recommendation
                                    is to start with 1, and then increase only if the GPU is stable.
                                    The effect is similar to that of ETHlargementPill.
@@ -153,20 +168,7 @@ Full list of command line options:
                                    Example: --mt 4 (applies tweak mode #4 to all cards that support this functionality)
                                             --mt 3,3,3,0 (applies tweak mode #3 to all cards except the last one)
 
-        --script-start             Executes user script right after miner start (eg: --script-start path_to_user_script)
-        --script-exit              Executes user script right before miner exit.
-        --script-epoch-change      Executes user script on epoch change.
-        --script-crash             Executes user script in case of miner crash.
-        --script-low-hash          Executes user script in case of low hash. Hash threshold is set in MegaHashes/second.
-                                   Example: --script-low-hash script_to_activate:50
-                                            (activates "script_to_activate" script once total hashrate drops to 50MH/s)
-
-        --version                  Display version information and exit.
-    -h, --help                     Display this help text and exit.
-
-
-
-    ------------------ GPU fine tuning for Windows only ------------------
+    ------------------ GPU fine tuning (Windows only) ------------------
 
                                    All options can be set to a comma separated list to apply different values to
                                    different cards. (default value for all options: 0 - not used)
@@ -177,7 +179,7 @@ Full list of command line options:
                                    Example: --fan 45,t:67
                                       GPU #0: set fan speed to 45%
                                       GPU #1: maintain GPU core temperature at 67C
-                                   Note: fan speeds are limited to [5%; 95%] range in auto-fan mode.
+                                   Note: fan speeds are limited to [5%, 95%] range in auto-fan mode.
         --pl                       Sets GPU power limit in percent. Must be within [0, 100] range.
         --cclock                   Sets GPU core clock offset in MHz.
                                    Requires running the miner with administrative privileges.
@@ -185,6 +187,18 @@ Full list of command line options:
         --mclock                   Sets GPU memory clock offset in MHz.
                                    Requires running the miner with administrative privileges.
                                    Will be set to 0 on exit and during DAG rebuild.
+        --cv                       Sets GPU core voltage in percent. Must be within [0, 100] range.
+                                   Use it only in case you know what you are doing!
+                                   Requires running the miner with administrative privileges.
+        --lock-cv                  Specifies desired GPU core voltage in mV. (default: 0 - disabled).
+                                   Requires running the miner with administrative privileges.
+        --pstate                   Sets GPU P-state. Valid values: p0.
+                                   Requires running the miner with administrative privileges.
+
+    --------------------------------------------------------------------
+
+        --version                  Display version information and exit.
+    -h, --help                     Display this help text and exit.
 
 
 ```
