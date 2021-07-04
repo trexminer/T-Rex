@@ -1,16 +1,17 @@
-# T-Rex NVIDIA GPU miner (Ethash / Kawpow / Octopus / MTP)
+# T-Rex NVIDIA GPU miner (Ethash / Autolykos2 / Kawpow / Octopus / MTP)
 
 ## Overview
 
 T-Rex is a versatile cryptocurrency mining software. It supports a variety of algorithms and we, as developers, are trying to do our best to make it as	fast and as convenient to use as possible.
 
-Developer fee is 1% (2% for Octopus).
+Developer fee is 1% (2% for Octopus and Autolykos2).
 
 ## Usage
 
 Full list of command line options:
 ```
     -a, --algo                     Specify the hash algorithm to use.
+                                   autolykos2
                                    etchash
                                    ethash
                                    kawpow
@@ -174,11 +175,13 @@ Full list of command line options:
                                    different cards. (default value for all options: 0 - not used)
         --fan                      Sets GPU fan speed in percent or target temperature (auto-fan).
                                    Valid formats:
-                                      --fan N   (where N is the fan speed)
-                                      --fan t:N (where N is the target temperature)
-                                   Example: --fan 45,t:67
+                                      --fan N    (where N is the fan speed)
+                                      --fan t:N  (where N is the target core temperature)
+                                      --fan tm:N (where N is the target memory temperature)
+                                   Example: --fan 45,t:67,tm:95
                                       GPU #0: set fan speed to 45%
                                       GPU #1: maintain GPU core temperature at 67C
+                                      GPU #2: maintain GPU memory temperature at 90C
                                    Note: fan speeds are limited to [5%, 95%] range in auto-fan mode.
         --pl                       Sets GPU power limit in percent. Must be within [0, 100] range.
         --cclock                   Sets GPU core clock offset in MHz.
@@ -204,6 +207,21 @@ Full list of command line options:
 ```
 
 ### Examples
+* **ERGO-nanopool**</br>
+```
+t-rex -a autolykos2 -o stratum+tcp://ergo-eu1.nanopool.org:11111 -u 9gpNWA3LVic14cMmWHmKGZyiGqrxPaSEvGsdyt7jt2DDAWDQyc9.rig0 -p x
+```
+
+* **ERGO-herominers**</br>
+```
+t-rex -a autolykos2 -o stratum+tcp://ergo.herominers.com:10250 -u 9gpNWA3LVic14cMmWHmKGZyiGqrxPaSEvGsdyt7jt2DDAWDQyc9.rig0 -p x
+```
+
+* **ERGO-woolypooly**</br>
+```
+t-rex -a autolykos2 -o stratum+tcp://pool.eu.woolypooly.com:3100 -u 9gpNWA3LVic14cMmWHmKGZyiGqrxPaSEvGsdyt7jt2DDAWDQyc9.rig0 -p x
+```
+
 * **ETH+ZIL-shardpool**</br>
 ```
 t-rex -a ethash -o stratum+tcp://eu1-zil.shardpool.io:3333 -u 0x1f75eccd8fbddf057495b96669ac15f8e296c2cd -p zil1yn92lnkkfsn0s2hlvfdmz6y2yhpqm98vng38s9@eu1.ethermine.org:4444 -w rig0 --extra-dag-epoch 0
@@ -261,12 +279,12 @@ t-rex -a ethash -o stratum+ssl://eth-us-east.flexpool.io:5555 -u 0x1f75eccd8fbdd
 
 * **CFX-woolypooly**</br>
 ```
-t-rex -a octopus -o stratum+tcp://cfx.woolypooly.com:3094 -u 0x1f75eccd8fbddf057495b96669ac15f8e296c2cd.rig0 -p x
+t-rex -a octopus -o stratum+tcp://cfx.woolypooly.com:3094 -u cfx:aajauymfc0cpd4aj91wmfyd150avfg3fmym9j2xrh8.rig0 -p x
 ```
 
 * **CFX-nanopool**</br>
 ```
-t-rex -a octopus -o stratum+tcp://cfx-eu1.nanopool.org:17777 -u 0x1f75eccd8fbddf057495b96669ac15f8e296c2cd.rig0/some@email.org -p x
+t-rex -a octopus -o stratum+tcp://cfx-eu1.nanopool.org:17777 -u cfx:aajauymfc0cpd4aj91wmfyd150avfg3fmym9j2xrh8.rig0/some@email.org -p x
 ```
 
 * **RVN-2miners**</br>
@@ -294,17 +312,17 @@ t-rex -a progpow --coin sero -o stratum+tcp://sero.woolypooly.com:8008 -u JCbZnE
 t-rex -a progpow-veil -o stratum+tcp://veil.woolypooly.com:3098 -u bv1qzftz0vuqa82zy29avylv8sclskweqsrwysgrkg -p x -w rig0
 ```
 
-* **XZC-2miners**</br>
+* **FIRO-2miners**</br>
 ```
-t-rex -a mtp -o stratum+tcp://xzc.2miners.com:8080 -u aBR3GY8eBKvEwjrVgNgSWZsteJPpFDqm6U.rig0 -p x
-```
-
-* **XZC-mintpond**</br>
-```
-t-rex -a mtp -o stratum+ssl://zcoin.mintpond.com:3005 -u aBR3GY8eBKvEwjrVgNgSWZsteJPpFDqm6U.rig0 -p x
+t-rex -a mtp -o stratum+tcp://firo.2miners.com:8181 -u aBR3GY8eBKvEwjrVgNgSWZsteJPpFDqm6U.rig0 -p x
 ```
 
-* **XZC-woolypooly**</br>
+* **FIRO-mintpond**</br>
+```
+t-rex -a mtp -o stratum+ssl://firo.mintpond.com:3005 -u aBR3GY8eBKvEwjrVgNgSWZsteJPpFDqm6U.rig0 -p x
+```
+
+* **FIRO-woolypooly**</br>
 ```
 t-rex -a mtp -o stratum+tcp://zcoin.woolypooly.com:3080 -u aBR3GY8eBKvEwjrVgNgSWZsteJPpFDqm6U.rig0 -p x
 ```
