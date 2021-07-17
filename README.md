@@ -182,7 +182,7 @@ Full list of command line options:
                                       GPU #0: set fan speed to 45%
                                       GPU #1: maintain GPU core temperature at 67C
                                       GPU #2: maintain GPU memory temperature at 90C
-                                   Note: fan speeds are limited to [5%, 95%] range in auto-fan mode.
+                                   Note: fan speeds are limited to [5%, 100%] range in auto-fan mode.
         --pl                       Sets GPU power limit in percent. Must be within [0, 100] range.
         --cclock                   Sets GPU core clock offset in MHz.
                                    Requires running the miner with administrative privileges.
