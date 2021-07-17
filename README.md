@@ -272,6 +272,11 @@ t-rex -a ethash -o stratum+tcp://eu-ru01.miningrigrentals.com:3344 -u wasya89.16
 t-rex -a ethash -o stratum+tcp://eth.woolypooly.com:3096 -u 0x1f75eccd8fbddf057495b96669ac15f8e296c2cd -p x -w rig0
 ```
 
+* **ETH-binance**</br>
+```
+t-rex -a ethash -o stratum+tcp://ethash.poolbinance.com:443 -u MiningAccountName -w rig0
+```
+
 * **ETH-flexpool**</br>
 ```
 t-rex -a ethash -o stratum+ssl://eth-us-east.flexpool.io:5555 -u 0x1f75eccd8fbddf057495b96669ac15f8e296c2cd -p x -w rig0
