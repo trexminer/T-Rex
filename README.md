@@ -327,6 +327,11 @@ t-rex -a mtp -o stratum+ssl://firo.mintpond.com:3005 -u aBR3GY8eBKvEwjrVgNgSWZst
 t-rex -a mtp -o stratum+tcp://zcoin.woolypooly.com:3080 -u aBR3GY8eBKvEwjrVgNgSWZsteJPpFDqm6U.rig0 -p x
 ```
 
+* **BTCIL-BTCILPool.com**</br>
+```
+t-rex.exe -a x17 -o stratum+tcp://btcilpool.com:8228 -u aBR3GY8eBKvEwjrVgNgSWZsteJPpFDqm6U.rig0 -p x
+```
+
 
 
 ## JSON config file
