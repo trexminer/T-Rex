@@ -155,6 +155,8 @@ Full list of command line options:
 
     ------------------ GPU fine tuning (Windows & Linux) ----------------
 
+        --pl                       Sets GPU power limit (Windows - in percent, Linux - in Watts)
+                                   Requires running the miner with administrative privileges.
         --lock-cclock              Specifies desired locked GPU core clock speed in MHz. (default: 0 - disabled).
                                    Requires running the miner with administrative privileges.
                                    Example: --lock-cclock 1000 (applies clock 1000Mhz to all cards that support this functionality)
@@ -183,7 +185,6 @@ Full list of command line options:
                                       GPU #1: maintain GPU core temperature at 67C
                                       GPU #2: maintain GPU memory temperature at 90C
                                    Note: fan speeds are limited to [5%, 100%] range in auto-fan mode.
-        --pl                       Sets GPU power limit in percent. Must be within [0, 100] range.
         --cclock                   Sets GPU core clock offset in MHz.
                                    Requires running the miner with administrative privileges.
                                    Will be set to 0 on exit and during DAG rebuild.
@@ -220,6 +221,11 @@ t-rex -a autolykos2 -o stratum+tcp://ergo.herominers.com:10250 -u 9gpNWA3LVic14c
 * **ERGO-woolypooly**</br>
 ```
 t-rex -a autolykos2 -o stratum+tcp://pool.eu.woolypooly.com:3100 -u 9gpNWA3LVic14cMmWHmKGZyiGqrxPaSEvGsdyt7jt2DDAWDQyc9.rig0 -p x
+```
+
+* **ERGO-2miners**</br>
+```
+t-rex -a autolykos2 -o stratum+tcp://erg.2miners.com:8888 -u 9gpNWA3LVic14cMmWHmKGZyiGqrxPaSEvGsdyt7jt2DDAWDQyc9.rig0 -p x
 ```
 
 * **ETH+ZIL-shardpool**</br>
