@@ -59,7 +59,9 @@ Full list of command line options:
                                    2 - recommended for 30xx cards to prevent invalid shares
                                    Can be set to a comma separated list to apply different values to different cards.
                                    (eg: --dag-build-mode 1,1,2,1)
-        --keep-gpu-busy            Continue mining even in case of connection loss.
+        --keep-gpu-busy            Continue mining even in case of pool connection loss.
+                                   Useful when a GPU crashes during start/stop cycle that occurs when internet
+                                   connection goes down.
 
     -o, --url                      URL of the mining pool in the following format: <scheme>://<host>:<port>
                                    Supported schemes: stratum+tcp
@@ -177,14 +179,21 @@ Full list of command line options:
                                    different cards. (default value for all options: 0 - not used)
         --fan                      Sets GPU fan speed in percent or target temperature (auto-fan).
                                    Valid formats:
-                                      --fan N    (where N is the fan speed)
-                                      --fan t:N  (where N is the target core temperature)
-                                      --fan tm:N (where N is the target memory temperature)
-                                   Example: --fan 45,t:67,tm:95
+                                      --fan N           (where N is the fan speed)
+                                      --fan t:N         (where N is the target core temperature)
+                                      --fan t:N[T1-T2]  (same as above, but with the fan speed constrained by [T1%, T2%] range)
+                                      --fan tm:N        (where N is the target memory temperature)
+                                      --fan tm:N[T1-T2] (same as above, but with the fan speed constrained by [T1%, T2%] range)
+                                   Example: --fan 45,t:67,tm:95,t:69[45-100],tm:90[50-95]
+                                   which translates to
                                       GPU #0: set fan speed to 45%
                                       GPU #1: maintain GPU core temperature at 67C
                                       GPU #2: maintain GPU memory temperature at 90C
-                                   Note: fan speeds are limited to [5%, 100%] range in auto-fan mode.
+                                      GPU #3: maintain GPU core temperature at 69C
+                                              with the fan speed limited to [45%, 100%] range
+                                      GPU #4: maintain GPU memory temperature at 90C
+                                              with the fan speed limited to [50%, 95%] range
+                                   Note: fan speeds are limited to [0%, 100%] range in auto-fan mode by default.
         --cclock                   Sets GPU core clock offset in MHz.
                                    Requires running the miner with administrative privileges.
                                    Will be set to 0 on exit and during DAG rebuild.
@@ -210,7 +219,7 @@ Full list of command line options:
 ### Examples
 * **ERGO-nanopool**</br>
 ```
-t-rex -a autolykos2 -o stratum+tcp://ergo-eu1.nanopool.org:11111 -u 9gpNWA3LVic14cMmWHmKGZyiGqrxPaSEvGsdyt7jt2DDAWDQyc9.rig0 -p x
+t-rex -a autolykos2 -o stratum+tcp://ergo-eu1.nanopool.org:11111 -u 9gpNWA3LVic14cMmWHmKGZyiGqrxPaSEvGsdyt7jt2DDAWDQyc9.rig0/your@email.org -p x
 ```
 
 * **ERGO-herominers**</br>
@@ -255,7 +264,7 @@ t-rex -a ethash -o stratum+http://127.0.0.1:8080
 
 * **ETH-nanopool**</br>
 ```
-t-rex -a ethash -o stratum+tcp://eth-eu1.nanopool.org:9999 -u 0x1f75eccd8fbddf057495b96669ac15f8e296c2cd.rig0/some@email.org -p x
+t-rex -a ethash -o stratum+tcp://eth-eu1.nanopool.org:9999 -u 0x1f75eccd8fbddf057495b96669ac15f8e296c2cd.rig0/your@email.org -p x
 ```
 
 * **ETH-ethermine**</br>
@@ -290,7 +299,7 @@ t-rex -a octopus -o stratum+tcp://cfx.woolypooly.com:3094 -u cfx:aajauymfc0cpd4a
 
 * **CFX-nanopool**</br>
 ```
-t-rex -a octopus -o stratum+tcp://cfx-eu1.nanopool.org:17777 -u cfx:aajauymfc0cpd4aj91wmfyd150avfg3fmym9j2xrh8.rig0/some@email.org -p x
+t-rex -a octopus -o stratum+tcp://cfx-eu1.nanopool.org:17777 -u cfx:aajauymfc0cpd4aj91wmfyd150avfg3fmym9j2xrh8.rig0/your@email.org -p x
 ```
 
 * **RVN-2miners**</br>
@@ -359,9 +368,6 @@ Common example of request structure: `http://<ip>:<port>/<handler_name>`
 Handlers:
 * **trex** - Shows miner control monitoring page in your web browser.<br/>
   You can see miner stats in real time and also change miner parameters and config on the fly. Aside from that you will also see any available updates.
-
-
-* **log** - Displays the contents of the log file (if configured).
 
 
 * **config** - Changes your config on HDD and also change some miner parameters on the fly.<br/>
@@ -571,22 +577,26 @@ Response example with comments:
 * **control** - Real time configuration of T-Rex miner.<br/>
   As of API 1.3 version the following commands are supported:
 
-  * _shutdown_ - Shuts down your miner. Usage: `http://127.0.0.1:4067/control?command=shutdown`. If you prefer POST set the request body to `{"command": "shutdown"}`.
+  * _shutdown_ - Shuts down your miner. Usage: `http://127.0.0.1:4067/control?command=shutdown`. <br/>
+  If you prefer POST set the request body to `{"command": "shutdown"}`.
   
   * _pause_ - Stops your miner. Usage: `http://127.0.0.1:4067/control?pause=true` ; to resume use: `http://127.0.0.1:4067/control?pause=false`. <br/>
-  To pause certain GPUs: `http://127.0.0.1:4067/control?pause=true:0,2,3` ; to resume use: `http://127.0.0.1:4067/control?pause=false:0,2,3`.
+  To pause certain GPUs: `http://127.0.0.1:4067/control?pause=true:0,2,3` ; to resume use: `http://127.0.0.1:4067/control?pause=false:0,2,3`. <br/>
+  If you prefer POST set the request body to `{"pause": "true:0,2,3"}`.
 
-  * _hashrate-avr_ - Changes sliding window size in real time. Usage: `http://127.0.0.1:4067/control?hashrate-avr=1`.
-  It will set sliding window of size 1 sec. If you prefer POST set the request body to `{"hashrate-avr": 1}`.
+  * _hashrate-avr_ - Changes sliding window size in real time. Usage: `http://127.0.0.1:4067/control?hashrate-avr=1`. <br/>
+  It will set sliding window of size 1 sec. <br/>
+  If you prefer POST set the request body to `{"hashrate-avr": 1}`.
 
-  * _no-color_ - Disables color output to console. Usage: `http://127.0.0.1:4067/control?no-color=true`. To enable: `http://127.0.0.1:4067/control?no-color=false`.
+  * _no-color_ - Disables color output to console. Usage: `http://127.0.0.1:4067/control?no-color=true`. To enable: `http://127.0.0.1:4067/control?no-color=false`. <br/>
   If you prefer POST set the request body to `{"no-color": true}`.
 
-  * _protocol-dump_ - Enables user protocol dump into console/log. To enable: `http://127.0.0.1:4067/control?protocol-dump=true`. To disable: `http://127.0.0.1:4067/control?protocol-dump=false`.
+  * _protocol-dump_ - Enables user protocol dump into console/log. To enable: `http://127.0.0.1:4067/control?protocol-dump=true`. To disable: `http://127.0.0.1:4067/control?protocol-dump=false`. <br/>
   If you prefer POST set the request body to `{"protocol-dump": true}`.
 
-  * _time-limit_ - Sets time limit in seconds for miner (it will shutdown after timeout). Usage: `http://127.0.0.1:4067/control?time-limit=120`. It will shutdown your miner 120 seconds after this request.
-  To disable: `http://127.0.0.1:4067/control?time-limit=0`. If you prefer POST set the request body to `{"time-limit": 120}`.
+  * _time-limit_ - Sets time limit in seconds for miner (it will shutdown after timeout). Usage: `http://127.0.0.1:4067/control?time-limit=120`. It will shutdown your miner 120 seconds after this request. <br/>
+  To disable: `http://127.0.0.1:4067/control?time-limit=0`. <br/>
+  If you prefer POST set the request body to `{"time-limit": 120}`.
 
 
 ## Antivirus alerts
