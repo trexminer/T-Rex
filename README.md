@@ -1,4 +1,4 @@
-# T-Rex NVIDIA GPU miner (Ethash / Autolykos2 / Kawpow / Octopus / MTP)
+# T-Rex NVIDIA GPU miner (Ethash / Autolykos2 / Kawpow / Octopus / Firopow / MTP)
 
 ## Overview
 
@@ -14,6 +14,7 @@ Full list of command line options:
                                    autolykos2
                                    etchash
                                    ethash
+                                   firopow
                                    kawpow
                                    mtp
                                    mtp-tcr
@@ -43,6 +44,14 @@ Full list of command line options:
         --low-load                 Low load mode (default: 0). 1 - enabled, 0 - disabled.
                                    Reduces the load on the GPUs if possible. Can be set to a comma separated string to enable
                                    the mode for a subset of the GPU list (eg: --low-load 0,0,1,0)
+        --lhr-tune                 [Ethash] LHR tuning value that controls the maximum hashrate the miner
+                                   tries to achieve for LHR cards (default: 0). Range from 0 to 8.
+                                   0 - disabled (use for non-LHR cards)
+                                   1 - lowest hashrate, low chance of LHR lock
+                                   4 - recommended value for most LHR cards
+                                   8 - highest hashrate, high chance of LHR lock
+                                   Can be set for each GPU separately, e.g.
+                                   "lhr-tune": "0,0,4,0" - this will set LHR tuning value to 4 for the third GPU.
         --kernel                   [Ethash] Choose CUDA kernel (default: 0). Range from 0 to 5.
                                    Set to 0 to enable auto-tuning: the miner will benchmark each kernel and select the fastest.
                                    Can be set to a comma separated list to apply different values to different cards.
@@ -124,7 +133,11 @@ Full list of command line options:
                                              within any 7 minute interval
 
     -B, --benchmark                Benchmark mode.
-        --benchmark-epoch          Epoch number used during benchmark (only for algorithms that generate DAG).
+        --benchmark-epoch          Epoch number used during benchmark (default: 0).
+                                   Only applicable to DAG based algorithms except ProgPOW family.
+        --benchmark-block          Block number used during benchmark (default: 0).
+                                   Only applicable for ProgPOW family of algorithms.
+
     -P, --protocol-dump            User protocol logging.
     -c, --config                   Load a JSON-format configuration file.
     -l, --log-path                 Full path of the log file.
@@ -181,9 +194,9 @@ Full list of command line options:
                                    Valid formats:
                                       --fan N           (where N is the fan speed)
                                       --fan t:N         (where N is the target core temperature)
-                                      --fan t:N[T1-T2]  (same as above, but with the fan speed constrained by [T1%, T2%] range)
+                                      --fan t:N[F1-F2]  (same as above, but with the fan speed constrained by [F1%, F2%] range)
                                       --fan tm:N        (where N is the target memory temperature)
-                                      --fan tm:N[T1-T2] (same as above, but with the fan speed constrained by [T1%, T2%] range)
+                                      --fan tm:N[F1-F2] (same as above, but with the fan speed constrained by [F1%, F2%] range)
                                    Example: --fan 45,t:67,tm:95,t:69[45-100],tm:90[50-95]
                                    which translates to
                                       GPU #0: set fan speed to 45%
@@ -224,7 +237,7 @@ t-rex -a autolykos2 -o stratum+tcp://ergo-eu1.nanopool.org:11111 -u 9gpNWA3LVic1
 
 * **ERGO-herominers**</br>
 ```
-t-rex -a autolykos2 -o stratum+tcp://ergo.herominers.com:10250 -u 9gpNWA3LVic14cMmWHmKGZyiGqrxPaSEvGsdyt7jt2DDAWDQyc9.rig0 -p x
+t-rex -a autolykos2 -o stratum+tcp://de.ergo.herominers.com:1180 -u 9gpNWA3LVic14cMmWHmKGZyiGqrxPaSEvGsdyt7jt2DDAWDQyc9.rig0 -p x
 ```
 
 * **ERGO-woolypooly**</br>
@@ -317,14 +330,24 @@ t-rex -a kawpow -o stratum+tcp://stratum.ravenminer.com:3838 -u RBX1G6nYDMHVtyaZ
 t-rex -a kawpow -o stratum+tcp://rvn.woolypooly.com:55555 -u RBX1G6nYDMHVtyaZiQWySMZw1Bb2DEDpT8.rig -p x
 ```
 
-* **SERO-woolypooly**</br>
+* **SERO-beepool**</br>
 ```
-t-rex -a progpow --coin sero -o stratum+tcp://sero.woolypooly.com:8008 -u JCbZnEb8XtWV814QWRpDcDxpQpXZXw4ARneAtwXNYdd3reuo4xQDcuZivopA761QnQyfMermHR9Mpi156F5n7ez9tv75Wt7vWbHXtuyZsQVWLbKNHnZgwcXbR2yZmbw89WT -p x -w rig0
+t-rex -a progpow --coin sero -o stratum+tcp://sero-pool.beepool.org:9515 -u JCbZnEb8XtWV814QWRpDcDxpQpXZXw4ARneAtwXNYdd3reuo4xQDcuZivopA761QnQyfMermHR9Mpi156F5n7ez9tv75Wt7vWbHXtuyZsQVWLbKNHnZgwcXbR2yZmbw89WT -p x -w rig0
+```
+
+* **VBK-luckypool**</br>
+```
+t-rex -a progpow-veriblock -o stratum+tcp://vbk.luckypool.io:9501 -u V5h6udgGe6eL4M9cYGi776WCP75URm -p x -w rig0
 ```
 
 * **VEIL-woolypooly**</br>
 ```
-t-rex -a progpow-veil -o stratum+tcp://veil.woolypooly.com:3098 -u bv1qzftz0vuqa82zy29avylv8sclskweqsrwysgrkg -p x -w rig0
+t-rex -a progpow-veil -o stratum+tcp://pool.woolypooly.com:3098 -u bv1qzftz0vuqa82zy29avylv8sclskweqsrwysgrkg -p x -w rig0
+```
+
+* **ZANO-luckypool**</br>
+```
+t-rex -a progpowz -o stratum+tcp://zano.luckypool.io:8877 -u iZ2bZfXdeN626rkyy9YsnfeT1Qq1K6XamE4brWm3tzP5hDUAig4dHmKSqe4yyq5dgbSPjmpLbfidqPyDXAuFY2J9544F95vagSF1Xqq3eCUp -p x -w rig0
 ```
 
 * **FIRO-2miners**</br>
