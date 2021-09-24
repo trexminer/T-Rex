@@ -36,8 +36,7 @@ Full list of command line options:
         --nonce-range-size         [Ethash, ProgPOW] Nonce range size for nonce search. The range will be split between all devices.
     -d, --devices                  Comma separated list of CUDA devices to use.
                                    Device IDs start counting from 0.
-        --pci-indexing             Sort devices by PCI bus ID. Device IDs start with 0.
-        --ab-indexing              Afterburner indexing (same as --pci-indexing but starts from 1).
+        --ab-indexing              Afterburner indexing (same as default but starts from 1).
     -i, --intensity                GPU intensity 8-25 (default: auto).
                                    Controls the GPU workload size, in other words how many nonces the miner is
                                    processing "in one go": N = 2 ^ intensity
@@ -96,14 +95,18 @@ Full list of command line options:
         --temperature-limit        GPU shutdown temperature. (default: 0 - disabled)
         --temperature-start        GPU temperature to enable card after disable. (default: 0 - disabled)
 
-    -b, --api-bind-telnet          IP:port for the miner API via telnet (default: 127.0.0.1:4068). Set to 0 to disable.
-                                   For external access set IP to 0.0.0.0, in which case setting "--api-read-only" is
-                                   recommended as well.
         --api-bind-http            IP:port for the miner API via HTTP (default: 127.0.0.1:4067). Set to 0 to disable.
                                    For external access set IP to 0.0.0.0, in which case setting "--api-read-only" is
                                    recommended as well.
+        --api-https                Enable https protocol for API calls.
+        --api-key                  Pre-generated authorization key for API calls. Use "--api-generate-key" to generate it.
+                                   Mandatory for allowing modify/update API calls.
         --api-read-only            Allow only read operations for API calls.
-    -J  --json-response            Telnet API server will make json responses.
+                                   Enabled by default if "--api-key" isn't set.
+        --api-generate-key         Generate API key from user-defined password.
+                                   The output key is used as a value for "--api-key".
+        --api-webserver-cert       Full path to API web server certificate file.
+        --api-webserver-pkey       Full path to API web server private key file.
 
     -N, --hashrate-avr             Sliding window length in seconds used to compute average hashrate (default: 60).
         --sharerate-avr            Sliding window length in seconds used to compute sharerate (default: 600).
@@ -160,7 +163,7 @@ Full list of command line options:
                                    To change main pool port you must write it right after algo: <algo_name>:<port_number>
                                    (eg: --fork-at x16rv2:4081=time:2019-10-01T16:00:00).
 
-        --script-start             Executes user script right after miner start (eg: --script-start path_to_user_script)
+        --script-start             Executes user script right after miner start (eg: --script-start script_filename)
         --script-exit              Executes user script right before miner exit.
         --script-epoch-change      Executes user script on epoch change.
         --script-crash             Executes user script in case of miner crash.
@@ -389,32 +392,39 @@ See `--api-bind-http` parameter on how to change it.
 Common example of request structure: `http://<ip>:<port>/<handler_name>`
 
 Handlers:
-* **trex** - Shows miner control monitoring page in your web browser.<br/>
+* **trex** - Shows miner control monitoring page in your web browser.  
   You can see miner stats in real time and also change miner parameters and config on the fly. Aside from that you will also see any available updates.
 
+* **login** - Intended to get session id key to use with all requests in case the miner was protected with api-key.
+  `http://127.0.0.1:4067/login?password=your_password`  =>  {"sid":"hj2DGIIYQ6rWcEbtscEU0ooGQvj3101L","success":1}
+  Then use "sid" with every request.
+  `http://127.0.0.1:4067/summary?sid=hj2DGIIYQ6rWcEbtscEU0ooGQvj3101L`
+  
+* **logout** - Intended to logout active session.
+  `http://127.0.0.1:4067/logout?sid=hj2DGIIYQ6rWcEbtscEU0ooGQvj3101L`  
 
-* **config** - Changes your config on HDD and also change some miner parameters on the fly.<br/>
-  You can change multiple parameters with one request. Both GET and POST requests supported.<br/>
-  If you use a config file (e.g. `t-rex.exe -c config_file`), then any action with handler `config` will be saved into `config_file`.<br/>
+* **config** - Changes your config on HDD and also change some miner parameters on the fly.  
+  You can change multiple parameters with one request. Both GET and POST requests supported.  
+  If you use a config file (e.g. `t-rex.exe -c config_file`), then any action with handler `config` will be saved into `config_file`.  
   You can use this handler for automation like changing config file at run-time, shutting down the miner via API and then restarting it with new parameters applied.
 
   GET usage examples:
-    * `http://127.0.0.1:4067/config?protocol-dump=true` <br/>
+    * `http://127.0.0.1:4067/config?protocol-dump=true`   
       Enables protocol dump on the fly and write it into config_file
-    * `http://127.0.0.1:4067/config?algo=x16r&devices=0,1&intensity=20,21` <br/>
+    * `http://127.0.0.1:4067/config?algo=x16r&devices=0,1&intensity=20,21`   
       Writes the following config settings into the config file: `algo=x16r`, `devices=0,1`, `intensity=20,21`
-    * `http://127.0.0.1:4067/config?algo=x16r&devices=0,1&intensity=20,21&config=test.conf` <br/>
+    * `http://127.0.0.1:4067/config?algo=x16r&devices=0,1&intensity=20,21&config=test.conf`   
       Saves settings into the file `test.conf` which will be created in the folder where the miner resides: `algo=x16r`, `devices=0,1`, `intensity=20,21`
-    * `http://127.0.0.1:4067/config?config=test.conf` <br/>
+    * `http://127.0.0.1:4067/config?config=test.conf`   
       Saves your current miner settings into `test.conf` file
-    * `http://127.0.0.1:4067/config` <br/>
+    * `http://127.0.0.1:4067/config`   
       Shows the current config state
-    * `http://127.0.0.1:4067/config?hashrate_avr=10&temperature-limit=70&temperature-start=40` <br/>
+    * `http://127.0.0.1:4067/config?hashrate_avr=10&temperature-limit=70&temperature-start=40`   
       Sets the following parameters on the fly: `hashrate_avr=10`, `temperature-limit=70`, `temperature-start=40`
 
-  For POST requests you must use correct json object with parameters you want to change:<br/>
-  URL: `http://127.0.0.1:4067/config`. <br/>
-  Payload: `{"hashrate_avr": 10, "temperature-limit": 70, "temperature-start": 40}`.<br/>
+  For POST requests you must use correct json object with parameters you want to change:  
+  URL: `http://127.0.0.1:4067/config`.   
+  Payload: `{"hashrate_avr": 10, "temperature-limit": 70, "temperature-start": 40}`.  
   Parameter names and types in json are identical to config json you normally use.
 
 
@@ -592,33 +602,33 @@ Response example with comments:
 }
 ```
 
-* **do-update** - Updates the miner.<br/>
-  Navigate to `http://127.0.0.1:4067/do-update` to start T-Rex update.<br/>
+* **do-update** - Updates the miner.  
+  Navigate to `http://127.0.0.1:4067/do-update` to start T-Rex update.  
   Navigate to `http://127.0.0.1:4067/do-update?stop=true` to stop the update.
 
 
-* **control** - Real time configuration of T-Rex miner.<br/>
+* **control** - Real time configuration of T-Rex miner.  
   As of API 1.3 version the following commands are supported:
 
-  * _shutdown_ - Shuts down your miner. Usage: `http://127.0.0.1:4067/control?command=shutdown`. <br/>
+  * _shutdown_ - Shuts down your miner. Usage: `http://127.0.0.1:4067/control?command=shutdown`.   
   If you prefer POST set the request body to `{"command": "shutdown"}`.
   
-  * _pause_ - Stops your miner. Usage: `http://127.0.0.1:4067/control?pause=true` ; to resume use: `http://127.0.0.1:4067/control?pause=false`. <br/>
-  To pause certain GPUs: `http://127.0.0.1:4067/control?pause=true:0,2,3` ; to resume use: `http://127.0.0.1:4067/control?pause=false:0,2,3`. <br/>
+  * _pause_ - Stops your miner. Usage: `http://127.0.0.1:4067/control?pause=true` ; to resume use: `http://127.0.0.1:4067/control?pause=false`.   
+  To pause certain GPUs: `http://127.0.0.1:4067/control?pause=true:0,2,3` ; to resume use: `http://127.0.0.1:4067/control?pause=false:0,2,3`.   
   If you prefer POST set the request body to `{"pause": "true:0,2,3"}`.
 
-  * _hashrate-avr_ - Changes sliding window size in real time. Usage: `http://127.0.0.1:4067/control?hashrate-avr=1`. <br/>
-  It will set sliding window of size 1 sec. <br/>
+  * _hashrate-avr_ - Changes sliding window size in real time. Usage: `http://127.0.0.1:4067/control?hashrate-avr=1`.   
+  It will set sliding window of size 1 sec.   
   If you prefer POST set the request body to `{"hashrate-avr": 1}`.
 
-  * _no-color_ - Disables color output to console. Usage: `http://127.0.0.1:4067/control?no-color=true`. To enable: `http://127.0.0.1:4067/control?no-color=false`. <br/>
+  * _no-color_ - Disables color output to console. Usage: `http://127.0.0.1:4067/control?no-color=true`. To enable: `http://127.0.0.1:4067/control?no-color=false`.   
   If you prefer POST set the request body to `{"no-color": true}`.
 
-  * _protocol-dump_ - Enables user protocol dump into console/log. To enable: `http://127.0.0.1:4067/control?protocol-dump=true`. To disable: `http://127.0.0.1:4067/control?protocol-dump=false`. <br/>
+  * _protocol-dump_ - Enables user protocol dump into console/log. To enable: `http://127.0.0.1:4067/control?protocol-dump=true`. To disable: `http://127.0.0.1:4067/control?protocol-dump=false`.   
   If you prefer POST set the request body to `{"protocol-dump": true}`.
 
-  * _time-limit_ - Sets time limit in seconds for miner (it will shutdown after timeout). Usage: `http://127.0.0.1:4067/control?time-limit=120`. It will shutdown your miner 120 seconds after this request. <br/>
-  To disable: `http://127.0.0.1:4067/control?time-limit=0`. <br/>
+  * _time-limit_ - Sets time limit in seconds for miner (it will shutdown after timeout). Usage: `http://127.0.0.1:4067/control?time-limit=120`. It will shutdown your miner 120 seconds after this request.   
+  To disable: `http://127.0.0.1:4067/control?time-limit=0`.   
   If you prefer POST set the request body to `{"time-limit": 120}`.
 
 
