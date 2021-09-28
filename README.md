@@ -163,6 +163,10 @@ Full list of command line options:
                                    To change main pool port you must write it right after algo: <algo_name>:<port_number>
                                    (eg: --fork-at x16rv2:4081=time:2019-10-01T16:00:00).
 
+    --------------------- Arbitrary script execution ------------------------
+    -- (scripts must be located in the same directory as t-rex executable) --
+    -------------------------------------------------------------------------
+
         --script-start             Executes user script right after miner start (eg: --script-start script_filename)
         --script-exit              Executes user script right before miner exit.
         --script-epoch-change      Executes user script on epoch change.
@@ -171,7 +175,7 @@ Full list of command line options:
                                    Example: --script-low-hash script_to_activate:50
                                             (activates "script_to_activate" script once total hashrate drops to 50MH/s)
 
-    ------------------ GPU fine tuning (Windows & Linux) ----------------
+    -------------------- GPU fine tuning (Windows & Linux) ------------------
 
         --pl                       Sets GPU power limit (Windows - in percent, Linux - in Watts)
                                    Requires running the miner with administrative privileges.
@@ -189,7 +193,7 @@ Full list of command line options:
                                    Example: --mt 4 (applies tweak mode #4 to all cards that support this functionality)
                                             --mt 3,3,3,0 (applies tweak mode #3 to all cards except the last one)
 
-    ------------------ GPU fine tuning (Windows only) ------------------
+    -------------------- GPU fine tuning (Windows only) ---------------------
 
                                    All options can be set to a comma separated list to apply different values to
                                    different cards. (default value for all options: 0 - not used)
@@ -224,7 +228,7 @@ Full list of command line options:
         --pstate                   Sets GPU P-state. Valid values: p0.
                                    Requires running the miner with administrative privileges.
 
-    --------------------------------------------------------------------
+    -------------------------------------------------------------------------
 
         --version                  Display version information and exit.
     -h, --help                     Display this help text and exit.
