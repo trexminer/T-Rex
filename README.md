@@ -257,6 +257,11 @@ t-rex -a autolykos2 -o stratum+tcp://pool.eu.woolypooly.com:3100 -u 9gpNWA3LVic1
 t-rex -a autolykos2 -o stratum+tcp://erg.2miners.com:8888 -u 9gpNWA3LVic14cMmWHmKGZyiGqrxPaSEvGsdyt7jt2DDAWDQyc9.rig0 -p x
 ```
 
+* **ERGO-Enigma**</br>
+```
+t-rex -a autolykos2 -o stratum+tcp://pool.enigmapool.com:5000 -u 9gUBTycYaeve3CeAD18rSLypRNxBz9KoQimaZ3uQnt2LPtRsRnD.rig0 -p x
+```
+
 * **ETH+ZIL-shardpool**</br>
 ```
 t-rex -a ethash -o stratum+tcp://eu1-zil.shardpool.io:3333 -u 0x1f75eccd8fbddf057495b96669ac15f8e296c2cd -p zil1yn92lnkkfsn0s2hlvfdmz6y2yhpqm98vng38s9@eu1.ethermine.org:4444 -w rig0 --extra-dag-epoch 0
