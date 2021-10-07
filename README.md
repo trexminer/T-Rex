@@ -4,7 +4,7 @@
 
 T-Rex is a versatile cryptocurrency mining software. It supports a variety of algorithms and we, as developers, are trying to do our best to make it as	fast and as convenient to use as possible.
 
-Developer fee is 1% (2% for Octopus and Autolykos2).
+Developer fee is 1% (2% for Octopus and Autolykos2 their dual mining modes).
 
 ## Usage
 
@@ -43,14 +43,18 @@ Full list of command line options:
         --low-load                 Low load mode (default: 0). 1 - enabled, 0 - disabled.
                                    Reduces the load on the GPUs if possible. Can be set to a comma separated string to enable
                                    the mode for a subset of the GPU list (eg: --low-load 0,0,1,0)
-        --lhr-tune                 [Ethash] LHR tuning value that controls the maximum hashrate the miner
-                                   tries to achieve for LHR cards (default: 0). Range from 0 to 8.
-                                   0 - disabled (use for non-LHR cards)
-                                   1 - lowest hashrate, low chance of LHR lock
-                                   4 - recommended value for most LHR cards
-                                   8 - highest hashrate, high chance of LHR lock
+        --lhr-algo                 Specify the second algorithm to use in LHR unlock dual mining mode.
+        --lhr-coin                 Set coin name for --lhr-algo.
+        --lhr-tune                 [Ethash] LHR tuning value that indicates the percentage of the full speed the miner
+                                   tries to achieve for LHR cards (default: -1). Range from 10 to 95.
+                                   -1 - auto-mode (LHR tune is set to 71 (or 68 in low power mode) for LHR cards and 0 for non-LHR)
+                                    0 - disabled (use for non-LHR cards)
+                                   30 - recommended starting value for most LHR cards in LHR unlock dual mining mode (see --lhr-algo)
+                                   68 - recommended starting value for most LHR cards in low power mode (see --lhr-low-power)
+                                   71 - recommended starting value for most LHR cards
                                    Can be set for each GPU separately, e.g.
-                                   "lhr-tune": "0,0,4,0" - this will set LHR tuning value to 4 for the third GPU.
+                                   "lhr-tune": "0,0,71.5,0" - this will set LHR tuning value to 71.5 for the third GPU.
+        --lhr-low-power            [Ethash] Reduces power consumption in LHR mode at a cost of a slightly lower hashrate.
         --kernel                   [Ethash] Choose CUDA kernel (default: 0). Range from 0 to 5.
                                    Set to 0 to enable auto-tuning: the miner will benchmark each kernel and select the fastest.
                                    Can be set to a comma separated list to apply different values to different cards.
@@ -70,7 +74,7 @@ Full list of command line options:
         --keep-gpu-busy            Continue mining even in case of pool connection loss.
                                    Useful when a GPU crashes during start/stop cycle that occurs when internet
                                    connection goes down.
-
+  
     -o, --url                      URL of the mining pool in the following format: <scheme>://<host>:<port>
                                    Supported schemes: stratum+tcp
                                                       stratum+ssl
@@ -81,9 +85,13 @@ Full list of command line options:
                                    Example: stratum+tcp://eu1.ethermine.org:4444
                                             stratum+ssl://zcoin.mintpond.com:3005
                                             stratum2+tcp://daggerhashimoto.hk.nicehash.com:3353
+        --url2                     URL of a second mining pool used for second algo in dual mining mode.
     -u, --user                     Username for mining server.
+        --user2                    Username for mining server used for second algo in dual mining mode.
     -p, --pass                     Password for mining server.
+        --pass2                    Password for mining server used for second algo in dual mining mode.
     -w, --worker                   Worker name.
+        --worker2                  Worker name for mining server used for second algo in dual mining mode.
 
     -r, --retries                  Number of times to retry if a network call fails.
     -R, --retry-pause              Pause in seconds between retries.
@@ -103,8 +111,8 @@ Full list of command line options:
                                    Mandatory for allowing modify/update API calls.
         --api-read-only            Allow only read operations for API calls.
                                    Enabled by default if "--api-key" isn't set.
-        --api-generate-key         Generate API key from user-defined password.
-                                   The output key is used as a value for "--api-key".
+        --api-generate-key         Generate API key from user-defined password. The output key is used as a value for "--api-key".
+                                   Use this option along with "-c" to write api-key directly into your config file.
         --api-webserver-cert       Full path to API web server certificate file.
         --api-webserver-pkey       Full path to API web server private key file.
 
@@ -159,7 +167,7 @@ Full list of command line options:
                                    Epoch condition: <algo_name>=epoch:<epoch_number> (eg: --fork-at etchash=epoch:390).
                                    Block condition: <algo_name>=block:<block_number> (eg: --fork-at x16rv2=block:6526421).
                                    Time condition:  <algo_name>=time:<YYYY-MM-DDTHH:MM:SS>. Time must be set in UTC+0.
-                                   (eg: --fork-at x16rv2=time:2019-10-01T16:00:00).
+                                   (eg: --fork-at firopow=time:2021-10-26T06:00:00).
                                    To change main pool port you must write it right after algo: <algo_name>:<port_number>
                                    (eg: --fork-at x16rv2:4081=time:2019-10-01T16:00:00).
 
@@ -237,6 +245,21 @@ Full list of command line options:
 ```
 
 ### Examples
+* **LHR-unlock-dual-ETH+ERGO**</br>
+```
+t-rex -a ethash --lhr-algo autolykos2 -o stratum+tcp://eu1.ethermine.org:4444 -u 0x1f75eccd8fbddf057495b96669ac15f8e296c2cd -p x -w rig0 --url2 stratum+tcp://pool.woolypooly.com:3100 --user2 9gpNWA3LVic14cMmWHmKGZyiGqrxPaSEvGsdyt7jt2DDAWDQyc9.rig0 --pass2 x
+```
+
+* **LHR-unlock-dual-ETH+RVN**</br>
+```
+t-rex -a ethash --lhr-algo kawpow -o stratum+tcp://eth.2miners.com:2020 -u 0x1f75eccd8fbddf057495b96669ac15f8e296c2cd -p x -w rig0 --url2 stratum+tcp://rvn.2miners.com:6060 --user2 RBX1G6nYDMHVtyaZiQWySMZw1Bb2DEDpT8.rig0 --pass2 x
+```
+
+* **LHR-unlock-dual-ETH+CFX**</br>
+```
+t-rex -a ethash --lhr-algo octopus -o stratum+ssl://eth-us-east.flexpool.io:5555 -u 0x1f75eccd8fbddf057495b96669ac15f8e296c2cd -p x -w rig0 --url2 stratum+tcp://pool.woolypooly.com:3094 --user2 cfx:aajauymfc0cpd4aj91wmfyd150avfg3fmym9j2xrh8.rig0 --pass2 x
+```
+
 * **ERGO-nanopool**</br>
 ```
 t-rex -a autolykos2 -o stratum+tcp://ergo-eu1.nanopool.org:11111 -u 9gpNWA3LVic14cMmWHmKGZyiGqrxPaSEvGsdyt7jt2DDAWDQyc9.rig0/your@email.org -p x
@@ -249,17 +272,12 @@ t-rex -a autolykos2 -o stratum+tcp://de.ergo.herominers.com:1180 -u 9gpNWA3LVic1
 
 * **ERGO-woolypooly**</br>
 ```
-t-rex -a autolykos2 -o stratum+tcp://pool.eu.woolypooly.com:3100 -u 9gpNWA3LVic14cMmWHmKGZyiGqrxPaSEvGsdyt7jt2DDAWDQyc9.rig0 -p x
+t-rex -a autolykos2 -o stratum+tcp://pool.woolypooly.com:3100 -u 9gpNWA3LVic14cMmWHmKGZyiGqrxPaSEvGsdyt7jt2DDAWDQyc9.rig0 -p x
 ```
 
 * **ERGO-2miners**</br>
 ```
 t-rex -a autolykos2 -o stratum+tcp://erg.2miners.com:8888 -u 9gpNWA3LVic14cMmWHmKGZyiGqrxPaSEvGsdyt7jt2DDAWDQyc9.rig0 -p x
-```
-
-* **ETH+ZIL-shardpool**</br>
-```
-t-rex -a ethash -o stratum+tcp://eu1-zil.shardpool.io:3333 -u 0x1f75eccd8fbddf057495b96669ac15f8e296c2cd -p zil1yn92lnkkfsn0s2hlvfdmz6y2yhpqm98vng38s9@eu1.ethermine.org:4444 -w rig0 --extra-dag-epoch 0
 ```
 
 * **ETC-2miners**</br>
@@ -269,7 +287,7 @@ t-rex -a etchash -o stratum+tcp://etc.2miners.com:1010 -u 0x1f75eccd8fbddf057495
 
 * **ETC-woolypooly**</br>
 ```
-t-rex -a etchash -o stratum+tcp://etc.woolypooly.com:35000 -u 0x1f75eccd8fbddf057495b96669ac15f8e296c2cd -p x -w rig0
+t-rex -a etchash -o stratum+tcp://pool.woolypooly.com:35000 -u 0x1f75eccd8fbddf057495b96669ac15f8e296c2cd -p x -w rig0
 ```
 
 * **ETH-2miners**</br>
@@ -304,7 +322,7 @@ t-rex -a ethash -o stratum+tcp://eu-ru01.miningrigrentals.com:3344 -u wasya89.16
 
 * **ETH-woolypooly**</br>
 ```
-t-rex -a ethash -o stratum+tcp://eth.woolypooly.com:3096 -u 0x1f75eccd8fbddf057495b96669ac15f8e296c2cd -p x -w rig0
+t-rex -a ethash -o stratum+tcp://pool.woolypooly.com:3096 -u 0x1f75eccd8fbddf057495b96669ac15f8e296c2cd -p x -w rig0
 ```
 
 * **ETH-flexpool**</br>
@@ -314,7 +332,7 @@ t-rex -a ethash -o stratum+ssl://eth-us-east.flexpool.io:5555 -u 0x1f75eccd8fbdd
 
 * **CFX-woolypooly**</br>
 ```
-t-rex -a octopus -o stratum+tcp://cfx.woolypooly.com:3094 -u cfx:aajauymfc0cpd4aj91wmfyd150avfg3fmym9j2xrh8.rig0 -p x
+t-rex -a octopus -o stratum+tcp://pool.woolypooly.com:3094 -u cfx:aajauymfc0cpd4aj91wmfyd150avfg3fmym9j2xrh8.rig0 -p x
 ```
 
 * **CFX-nanopool**</br>
@@ -334,7 +352,7 @@ t-rex -a kawpow -o stratum+tcp://stratum.ravenminer.com:3838 -u RBX1G6nYDMHVtyaZ
 
 * **RVN-woolypooly**</br>
 ```
-t-rex -a kawpow -o stratum+tcp://rvn.woolypooly.com:55555 -u RBX1G6nYDMHVtyaZiQWySMZw1Bb2DEDpT8.rig -p x
+t-rex -a kawpow -o stratum+tcp://pool.woolypooly.com:55555 -u RBX1G6nYDMHVtyaZiQWySMZw1Bb2DEDpT8.rig -p x
 ```
 
 * **SERO-beepool**</br>
@@ -359,17 +377,17 @@ t-rex -a progpowz -o stratum+tcp://zano.luckypool.io:8877 -u iZ2bZfXdeN626rkyy9Y
 
 * **FIRO-2miners**</br>
 ```
-t-rex -a mtp -o stratum+tcp://firo.2miners.com:8181 -u aBR3GY8eBKvEwjrVgNgSWZsteJPpFDqm6U.rig0 -p x
+t-rex -a mtp -o stratum+tcp://firo.2miners.com:8181 -u aBR3GY8eBKvEwjrVgNgSWZsteJPpFDqm6U.rig0 -p x --fork-at firopow=time:2021-10-26T06:00:00
 ```
 
 * **FIRO-mintpond**</br>
 ```
-t-rex -a mtp -o stratum+ssl://firo.mintpond.com:3005 -u aBR3GY8eBKvEwjrVgNgSWZsteJPpFDqm6U.rig0 -p x
+t-rex -a mtp -o stratum+ssl://firo.mintpond.com:3005 -u aBR3GY8eBKvEwjrVgNgSWZsteJPpFDqm6U.rig0 -p x --fork-at firopow=time:2021-10-26T06:00:00
 ```
 
 * **FIRO-woolypooly**</br>
 ```
-t-rex -a mtp -o stratum+tcp://zcoin.woolypooly.com:3080 -u aBR3GY8eBKvEwjrVgNgSWZsteJPpFDqm6U.rig0 -p x
+t-rex -a mtp -o stratum+tcp://pool.woolypooly.com:3098 -u aBR3GY8eBKvEwjrVgNgSWZsteJPpFDqm6U.rig0 -p x --fork-at firopow=time:2021-10-26T06:00:00
 ```
 
 
