@@ -4,7 +4,7 @@
 
 T-Rex is a versatile cryptocurrency mining software. It supports a variety of algorithms and we, as developers, are trying to do our best to make it as	fast and as convenient to use as possible.
 
-Developer fee is 1% (2% for Octopus and Autolykos2 their dual mining modes).
+Developer fee is 1% (2% for Octopus, Autolykos2, and their dual mining modes).
 
 ## Usage
 
