@@ -27,7 +27,7 @@ Full list of command line options:
                                    tensority
         --coin                     [Ethash, ProgPOW] Set coin name.
                                    Helps avoid DAG rebuilds when switching back from a dev fee session.
-                                   Example: "eth" for Ethereum, "zil" for Zilliqa.
+                                   Example: "eth" for Ethereum, "eth+zil" for Ethereum+Zilliqa mining.
         --extra-dag-epoch          Allocate extra DAG at GPU for specified epoch. Can be useful for dual mining
                                    of coins like Zilliqa (ZIL). (eg: --extra-dag-epoch 0)
                                    Can be set for each GPU separately by using comma separated list of values
@@ -45,7 +45,7 @@ Full list of command line options:
                                    the mode for a subset of the GPU list (eg: --low-load 0,0,1,0)
         --lhr-algo                 Specify the second algorithm to use in LHR unlock dual mining mode.
         --lhr-coin                 Set coin name for --lhr-algo.
-        --lhr-tune                 [Ethash] LHR tuning value that indicates the percentage of the full speed the miner
+        --lhr-tune                 [Ethash, Autolykos2] LHR tuning value that indicates the percentage of the full speed the miner
                                    tries to achieve for LHR cards (default: -1). Range from 10 to 95.
                                    -1 - auto-mode (LHR tune is set to 71 (or 68 in low power mode) for LHR cards and 0 for non-LHR)
                                     0 - disabled (use for non-LHR cards)
@@ -54,7 +54,13 @@ Full list of command line options:
                                    71 - recommended starting value for most LHR cards
                                    Can be set for each GPU separately, e.g.
                                    "lhr-tune": "0,0,71.5,0" - this will set LHR tuning value to 71.5 for the third GPU.
-        --lhr-low-power            [Ethash] Reduces power consumption in LHR mode at a cost of a slightly lower hashrate.
+        --lhr-autotune-mode        [Ethash, Autolykos2] LHR auto-tune mode (default: full). Valid values:
+                                   off  - auto-tune is disabled. LHR tune value is fixed during mining, and will not change
+                                          no matter how often LHR lock is detected
+                                   down - LHR tune value will decrease if the miner detects LHR lock
+                                   full - same as "down" but additionally miner will be trying to increase LHR tune
+                                          value if it's stable on the current LHR tune level
+        --lhr-low-power            [Ethash, Autolykos2] Reduces power consumption in LHR mode at a cost of a slightly lower hashrate.
         --kernel                   [Ethash] Choose CUDA kernel (default: 0). Range from 0 to 5.
                                    Set to 0 to enable auto-tuning: the miner will benchmark each kernel and select the fastest.
                                    Can be set to a comma separated list to apply different values to different cards.
@@ -127,6 +133,7 @@ Full list of command line options:
 
         --no-color                 Disable color output for console.
         --no-hashrate-report       Disable hashrate report to pool.
+        --no-new-block-info        Don't print new block info in console.
         --no-nvml                  Disable NVML GPU stats.
         --no-strict-ssl            Disable certificate validation for SSL connections.
         --no-watchdog              Disable built-in watchdog.
@@ -278,6 +285,11 @@ t-rex -a autolykos2 -o stratum+tcp://pool.woolypooly.com:3100 -u 9gpNWA3LVic14cM
 * **ERGO-2miners**</br>
 ```
 t-rex -a autolykos2 -o stratum+tcp://erg.2miners.com:8888 -u 9gpNWA3LVic14cMmWHmKGZyiGqrxPaSEvGsdyt7jt2DDAWDQyc9.rig0 -p x
+```
+
+* **ETH+ZIL-ezil**</br>
+```
+t-rex -a ethash --coin eth+zil -o stratum+tcp://eth.2miners.com:2020 -u 0x1f75eccd8fbddf057495b96669ac15f8e296c2cd --url2 stratum+tcp://eu.ezil.me:5555 --user2 0x1f75eccd8fbddf057495b96669ac15f8e296c2cd.zil1yn92lnkkfsn0s2hlvfdmz6y2yhpqm98vng38s9.WORKER --extra-dag-epoch 0
 ```
 
 * **ETC-2miners**</br>
