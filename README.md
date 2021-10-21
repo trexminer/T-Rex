@@ -292,6 +292,11 @@ t-rex -a autolykos2 -o stratum+tcp://erg.2miners.com:8888 -u 9gpNWA3LVic14cMmWHm
 t-rex -a ethash --coin eth+zil -o stratum+tcp://eth.2miners.com:2020 -u 0x1f75eccd8fbddf057495b96669ac15f8e296c2cd --url2 stratum+tcp://eu.ezil.me:5555 --user2 0x1f75eccd8fbddf057495b96669ac15f8e296c2cd.zil1yn92lnkkfsn0s2hlvfdmz6y2yhpqm98vng38s9.WORKER --extra-dag-epoch 0
 ```
 
+* **ETH+ZIL-shardpool.io**</br>
+```
+t-rex -a ethash --coin eth+zil -o stratum+tcp://eth.2miners.com:2020 -u 0x1f75eccd8fbddf057495b96669ac15f8e296c2cd --url2 stratum+tcp://eu1.shardpool.io:3333 --user2 0x1f75eccd8fbddf057495b96669ac15f8e296c2cd.zil1yn92lnkkfsn0s2hlvfdmz6y2yhpqm98vng38s9.WORKER --extra-dag-epoch 0
+```
+
 * **ETC-2miners**</br>
 ```
 t-rex -a etchash -o stratum+tcp://etc.2miners.com:1010 -u 0x1f75eccd8fbddf057495b96669ac15f8e296c2cd -p x -w rig0
