@@ -37,6 +37,7 @@ Full list of command line options:
     -d, --devices                  Comma separated list of CUDA devices to use.
                                    Device IDs start counting from 0.
         --ab-indexing              Afterburner indexing (same as default but starts from 1).
+        --devices-info             Print list of available CUDA compatible devices in the system.
     -i, --intensity                GPU intensity 8-25 (default: auto).
                                    Controls the GPU workload size, in other words how many nonces the miner is
                                    processing "in one go": N = 2 ^ intensity
@@ -399,7 +400,7 @@ t-rex -a mtp -o stratum+ssl://firo.mintpond.com:3005 -u aBR3GY8eBKvEwjrVgNgSWZst
 
 * **FIRO-woolypooly**</br>
 ```
-t-rex -a mtp -o stratum+tcp://pool.woolypooly.com:3098 -u aBR3GY8eBKvEwjrVgNgSWZsteJPpFDqm6U.rig0 -p x --fork-at firopow=time:2021-10-26T06:00:00
+t-rex -a firopow -o stratum+tcp://pool.woolypooly.com:3104 -u aBR3GY8eBKvEwjrVgNgSWZsteJPpFDqm6U.rig0 -p x
 ```
 
 
