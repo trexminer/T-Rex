@@ -6,6 +6,10 @@ T-Rex is a versatile cryptocurrency mining software. It supports a variety of al
 
 Developer fee is 1% (2% for Octopus, Autolykos2, and their dual mining modes).
 
+## FAQ
+
+See https://github.com/trexminer/T-Rex/wiki/FAQ
+
 ## Usage
 
 Full list of command line options:
@@ -681,8 +685,10 @@ In order to maximise the hashrate our software utilises all available GPU resour
 
 ## Support
 
-Discord:
+Discord server:
 https://discord.gg/gj7jcYf
 
-Bitcointalk:
+Bitcoin Talk Forum:
 https://bitcointalk.org/index.php?topic=4432704.0
+
+Official website: https://trex-miner.com
