@@ -52,19 +52,26 @@ Full list of command line options:
         --lhr-coin                 Set coin name for --lhr-algo.
         --lhr-tune                 [Ethash, Autolykos2] LHR tuning value that indicates the percentage of the full speed the miner
                                    tries to achieve for LHR cards (default: -1). Range from 10 to 95.
-                                   -1 - auto-mode (LHR tune is set to 71 (or 68 in low power mode) for LHR cards and 0 for non-LHR)
+                                   -1 - auto-mode (LHR tune is set to 74 (or 68 in low power mode) for LHR cards and 0 for non-LHR)
                                     0 - disabled (use for non-LHR cards)
                                    30 - recommended starting value for most LHR cards in LHR unlock dual mining mode (see --lhr-algo)
                                    68 - recommended starting value for most LHR cards in low power mode (see --lhr-low-power)
-                                   71 - recommended starting value for most LHR cards
+                                   74 - recommended starting value for most LHR cards
                                    Can be set for each GPU separately, e.g.
-                                   "lhr-tune": "0,0,71.5,0" - this will set LHR tuning value to 71.5 for the third GPU.
+                                   "lhr-tune": "0,0,74.5,0" - this will set LHR tuning value to 74.5 for the third GPU.
         --lhr-autotune-mode        [Ethash, Autolykos2] LHR auto-tune mode (default: full). Valid values:
                                    off  - auto-tune is disabled. LHR tune value is fixed during mining, and will not change
                                           no matter how often LHR lock is detected
                                    down - LHR tune value will decrease if the miner detects LHR lock
                                    full - same as "down" but additionally miner will be trying to increase LHR tune
                                           value if it's stable on the current LHR tune level
+        --lhr-autotune-step-size   LHR auto-tune step size (default: 0.5).
+                                   Indicates by how much LHR tune value is changed by the LHR auto-tuner.
+        --lhr-autotune-interval    LHR auto-tune time interval in minutes (default: 20).
+                                   Amount of time the GPU must be mining without hitting LHR locks before the miner
+                                   increases LHR tune value.
+                                   Also, if the GPU has triggered an LHR lock, LHR tune value will not decrease if
+                                   the previous LHR lock was detected more than "--lhr-autotune-interval" minutes ago.
         --lhr-low-power            [Ethash, Autolykos2] Reduces power consumption in LHR mode at a cost of a slightly lower hashrate.
         --kernel                   [Ethash] Choose CUDA kernel (default: 0). Range from 0 to 5.
                                    Set to 0 to enable auto-tuning: the miner will benchmark each kernel and select the fastest.
@@ -82,6 +89,15 @@ Full list of command line options:
                                    2 - recommended for 30xx cards to prevent invalid shares
                                    Can be set to a comma separated list to apply different values to different cards.
                                    (eg: --dag-build-mode 1,1,2,1)
+        --dataset-mode             [Autolykos2] Dataset mode. (default: 2). Valid values:
+                                   0 - auto (defaults to 2)
+                                   1 - single (each ERGO block the GPU stops hashing until it generates the dataset)
+                                   2 - double (the miner generates the dataset for the next ERGO block before it arrives
+                                       with a small penalty to reported hashrate, and when the next block does arrive, it
+                                       immediately starts hashing without losing 1-4 seconds on creating the dataset).
+                                       Memory requirements are doubled in this mode as the GPU has to hold two memory buffers.
+                                       If there is not enough memory on the GPU for two datasets, the miner will fall back
+                                       to single buffer mode.
         --keep-gpu-busy            Continue mining even in case of pool connection loss.
                                    Useful when a GPU crashes during start/stop cycle that occurs when internet
                                    connection goes down.
@@ -103,16 +119,18 @@ Full list of command line options:
         --pass2                    Password for mining server used for second algo in dual mining mode.
     -w, --worker                   Worker name.
         --worker2                  Worker name for mining server used for second algo in dual mining mode.
+        --proxy                    IP:port for connection via SOCKS5 proxy server.
 
     -r, --retries                  Number of times to retry if a network call fails.
     -R, --retry-pause              Pause in seconds between retries.
     -T, --timeout                  Network timeout, in seconds (default: 300)
         --time-limit               Miner shutdown interval in seconds. (default: 0 - disabled)
 
-        --temperature-color        Set temperature color for GPUs stat. Example: 55,65 - it means that
+        --temperature-color        Set core temperature color for GPUs stat. Example: 55,65 - it means that
                                    temperatures above 55 will have yellow color, above 65 - red color. (default: 67,77)
         --temperature-limit        GPU shutdown temperature. (default: 0 - disabled)
         --temperature-start        GPU temperature to enable card after disable. (default: 0 - disabled)
+        --temperature-color-mem    Set memory temperature color for GPUs stat. (default: 80,100)
 
         --api-bind-http            IP:port for the miner API via HTTP (default: 127.0.0.1:4067). Set to 0 to disable.
                                    For external access set IP to 0.0.0.0, in which case setting "--api-read-only" is
@@ -127,7 +145,7 @@ Full list of command line options:
         --api-webserver-cert       Full path to API web server certificate file.
         --api-webserver-pkey       Full path to API web server private key file.
 
-    -N, --hashrate-avr             Sliding window length in seconds used to compute average hashrate (default: 60).
+    -N, --hashrate-avr             Sliding window length in seconds used to compute average hashrate (default: 60, max: 86400).
         --sharerate-avr            Sliding window length in seconds used to compute sharerate (default: 600).
         --gpu-report-interval      GPU stats report frequency. Minimum is 5 sec. (default: 30 sec)
         --gpu-report-interval-s    GPU stats report frequency in shares. 0 by default (disabled).
@@ -260,6 +278,11 @@ Full list of command line options:
 * **LHR-unlock-dual-ETH+ERGO**</br>
 ```
 t-rex -a ethash --lhr-algo autolykos2 -o stratum+tcp://eu1.ethermine.org:4444 -u 0x1f75eccd8fbddf057495b96669ac15f8e296c2cd -p x -w rig0 --url2 stratum+tcp://pool.woolypooly.com:3100 --user2 9gpNWA3LVic14cMmWHmKGZyiGqrxPaSEvGsdyt7jt2DDAWDQyc9.rig0 --pass2 x
+```
+
+* **LHR-unlock-dual-ETH+FIRO**</br>
+```
+t-rex -a ethash --lhr-algo firopow -o stratum+tcp://pool.woolypooly.com:3096 -u 0x1f75eccd8fbddf057495b96669ac15f8e296c2cd -p x -w rig0 --url2 stratum+tcp://firo.2miners.com:8181 --user2 aBR3GY8eBKvEwjrVgNgSWZsteJPpFDqm6U.rig0 --pass2 x
 ```
 
 * **LHR-unlock-dual-ETH+RVN**</br>
