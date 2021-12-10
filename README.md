@@ -120,6 +120,8 @@ Full list of command line options:
     -w, --worker                   Worker name.
         --worker2                  Worker name for mining server used for second algo in dual mining mode.
         --proxy                    IP:port for connection via SOCKS5 proxy server.
+                                   Domain names are resolved through the proxy too.
+        --dns-https-server         IP:port for DNS server working via DNS-over-HTTPS.
 
     -r, --retries                  Number of times to retry if a network call fails.
     -R, --retry-pause              Pause in seconds between retries.
@@ -128,9 +130,9 @@ Full list of command line options:
 
         --temperature-color        Set core temperature color for GPUs stat. Example: 55,65 - it means that
                                    temperatures above 55 will have yellow color, above 65 - red color. (default: 67,77)
+        --temperature-color-mem    Set memory temperature color for GPUs stat. (default: 80,100)
         --temperature-limit        GPU shutdown temperature. (default: 0 - disabled)
         --temperature-start        GPU temperature to enable card after disable. (default: 0 - disabled)
-        --temperature-color-mem    Set memory temperature color for GPUs stat. (default: 80,100)
 
         --api-bind-http            IP:port for the miner API via HTTP (default: 127.0.0.1:4067). Set to 0 to disable.
                                    For external access set IP to 0.0.0.0, in which case setting "--api-read-only" is
@@ -159,6 +161,7 @@ Full list of command line options:
         --no-new-block-info        Don't print new block info in console.
         --no-nvml                  Disable NVML GPU stats.
         --no-strict-ssl            Disable certificate validation for SSL connections.
+        --no-sni                   Disable setting SNI header for SSL connections.
         --no-watchdog              Disable built-in watchdog.
         --watchdog-exit-mode       Specifies the action "A" the watchdog should take if the miner gets restarted "N" times
                                    within "M" minutes.
@@ -333,6 +336,11 @@ t-rex -a etchash -o stratum+tcp://pool.woolypooly.com:35000 -u 0x1f75eccd8fbddf0
 * **ETH-2miners**</br>
 ```
 t-rex -a ethash -o stratum+tcp://eth.2miners.com:2020 -u 0x1f75eccd8fbddf057495b96669ac15f8e296c2cd -p x -w rig0
+```
+
+* **ETH-ISP-hidden-mode**</br>
+```
+t-rex -a ethash -o stratum+ssl://eth-us-east.flexpool.io:5555 -u 0x1f75eccd8fbddf057495b96669ac15f8e296c2cd -p x -w rig0 --no-sni --dns-https-server 1.1.1.1
 ```
 
 * **ETH-ethproxy**</br>
