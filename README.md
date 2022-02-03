@@ -16,6 +16,7 @@ Full list of command line options:
 ```
     -a, --algo                     Specify the hash algorithm to use.
                                    autolykos2
+                                   blake3
                                    etchash
                                    ethash
                                    firopow
@@ -298,6 +299,11 @@ t-rex -a ethash --lhr-algo kawpow -o stratum+tcp://eth.2miners.com:2020 -u 0x1f7
 t-rex -a ethash --lhr-algo octopus -o stratum+ssl://eth-us-east.flexpool.io:5555 -u 0x1f75eccd8fbddf057495b96669ac15f8e296c2cd -p x -w rig0 --url2 stratum+tcp://pool.woolypooly.com:3094 --user2 cfx:aajauymfc0cpd4aj91wmfyd150avfg3fmym9j2xrh8.rig0 --pass2 x
 ```
 
+* **LHR-unlock-dual-ETH+ALPH**</br>
+```
+t-rex -a ethash --lhr-algo blake3 -o stratum+tcp://eth.2miners.com:2020 -u 0x1f75eccd8fbddf057495b96669ac15f8e296c2cd -p x -w rig0 --url2 stratum+tcp://de.alephium.herominers.com:1199 --user2 1qUuxVuXN2Pk4nnYTbL4qihjLWyRkVMQVYQDAajCcuPq --pass2 x
+```
+
 * **ERGO-nanopool**</br>
 ```
 t-rex -a autolykos2 -o stratum+tcp://ergo-eu1.nanopool.org:11111 -u 9gpNWA3LVic14cMmWHmKGZyiGqrxPaSEvGsdyt7jt2DDAWDQyc9.rig0/your@email.org -p x
@@ -388,6 +394,11 @@ t-rex -a octopus -o stratum+tcp://pool.woolypooly.com:3094 -u cfx:aajauymfc0cpd4
 t-rex -a octopus -o stratum+tcp://cfx-eu1.nanopool.org:17777 -u cfx:aajauymfc0cpd4aj91wmfyd150avfg3fmym9j2xrh8.rig0/your@email.org -p x
 ```
 
+* **ALPH-woolypooly**</br>
+```
+t-rex -a blake3 -o stratum+tcp://pool.woolypooly.com:3106 -u 1qUuxVuXN2Pk4nnYTbL4qihjLWyRkVMQVYQDAajCcuPq -p x -w rig0
+```
+
 * **RVN-2miners**</br>
 ```
 t-rex -a kawpow -o stratum+tcp://rvn.2miners.com:6060 -u RBX1G6nYDMHVtyaZiQWySMZw1Bb2DEDpT8.rig -p x
@@ -403,9 +414,9 @@ t-rex -a kawpow -o stratum+tcp://stratum.ravenminer.com:3838 -u RBX1G6nYDMHVtyaZ
 t-rex -a kawpow -o stratum+tcp://pool.woolypooly.com:55555 -u RBX1G6nYDMHVtyaZiQWySMZw1Bb2DEDpT8.rig -p x
 ```
 
-* **SERO-beepool**</br>
+* **SERO-serocash**</br>
 ```
-t-rex -a progpow --coin sero -o stratum+tcp://sero-pool.beepool.org:9515 -u JCbZnEb8XtWV814QWRpDcDxpQpXZXw4ARneAtwXNYdd3reuo4xQDcuZivopA761QnQyfMermHR9Mpi156F5n7ez9tv75Wt7vWbHXtuyZsQVWLbKNHnZgwcXbR2yZmbw89WT -p x -w rig0
+t-rex -a progpow --coin sero -o stratum+tcp://pool2.sero.cash:8808 -u JCbZnEb8XtWV814QWRpDcDxpQpXZXw4ARneAtwXNYdd3reuo4xQDcuZivopA761QnQyfMermHR9Mpi156F5n7ez9tv75Wt7vWbHXtuyZsQVWLbKNHnZgwcXbR2yZmbw89WT -p x -w rig0
 ```
 
 * **VBK-luckypool**</br>
