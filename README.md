@@ -49,8 +49,26 @@ Full list of command line options:
         --low-load                 Low load mode (default: 0). 1 - enabled, 0 - disabled.
                                    Reduces the load on the GPUs if possible. Can be set to a comma separated string to enable
                                    the mode for a subset of the GPU list (eg: --low-load 0,0,1,0)
-        --lhr-algo                 Specify the second algorithm to use in LHR unlock dual mining mode.
-        --lhr-coin                 Set coin name for --lhr-algo.
+        --dual-algo                Second algorithm to use in dual mining mode.
+        --dual-algo-mode           Controls GPU behaviour in dual mining mode (default: a12).
+                                   Format: <algo>:<tuning coefficient>
+                                   "<algo>" can be one of: "a1" (first algorithm), "a2" (second algorithm), "a12" (both - dual mining)
+                                   "<tuning coefficient>" is optional, and can be either
+                                         "rXX" ("dual ratio" coefficient set to XX), or
+                                         "hXX" (primary algo hashrate percentage XX).
+                                   Examples:
+                                   a12:r15 - GPU will mine both algorithms with dual ratio 15
+                                             (second algo hashrate is 15x primary algo hashrate)
+                                   a12:h95 - GPU will mine both algorithms maintaining primary algorithm hashrate at
+                                             about 95% of the maximum
+                                   a1      - GPU will only mine the primary algorithm (single mode)
+                                   a2      - GPU will only mine the secondary algorithm (single mode)
+        --profit-per-mh            Estimated profitability of the algorithms in dual mining mode per 1MH of hashrate.
+                                   Used for fine-tuning algo1/algo2 proportion, the miner will try to maximise the earnings.
+                                   Format: <profit_algo1>:<profit_algo2>.
+                                   Example: --profit-per-mh 0.0516:0.0012
+        --lhr-algo                 Second algorithm to use in LHR unlock dual mining mode.
+        --lhr-coin                 Coin name for --lhr-algo.
         --lhr-tune                 [Ethash, Autolykos2] LHR tuning value that indicates the percentage of the full speed the miner
                                    tries to achieve for LHR cards (default: -1). Range from 10 to 95.
                                    -1 - auto-mode (LHR tune is set to 74 (or 68 in low power mode) for LHR cards and 0 for non-LHR)
@@ -299,9 +317,9 @@ t-rex -a ethash --lhr-algo kawpow -o stratum+tcp://eth.2miners.com:2020 -u 0x1f7
 t-rex -a ethash --lhr-algo octopus -o stratum+ssl://eth-us-east.flexpool.io:5555 -u 0x1f75eccd8fbddf057495b96669ac15f8e296c2cd -p x -w rig0 --url2 stratum+tcp://pool.woolypooly.com:3094 --user2 cfx:aajauymfc0cpd4aj91wmfyd150avfg3fmym9j2xrh8.rig0 --pass2 x
 ```
 
-* **LHR-unlock-dual-ETH+ALPH**</br>
+* **ETH+ALPH**</br>
 ```
-t-rex -a ethash --lhr-algo blake3 -o stratum+tcp://eth.2miners.com:2020 -u 0x1f75eccd8fbddf057495b96669ac15f8e296c2cd -p x -w rig0 --url2 stratum+tcp://de.alephium.herominers.com:1199 --user2 1qUuxVuXN2Pk4nnYTbL4qihjLWyRkVMQVYQDAajCcuPq --pass2 x
+t-rex -a ethash --dual-algo blake3 -o stratum+tcp://eth.2miners.com:2020 -u 0x1f75eccd8fbddf057495b96669ac15f8e296c2cd -p x -w rig0 --url2 stratum+tcp://de.alephium.herominers.com:1199 --user2 1qUuxVuXN2Pk4nnYTbL4qihjLWyRkVMQVYQDAajCcuPq --pass2 x
 ```
 
 * **ERGO-nanopool**</br>
@@ -397,6 +415,11 @@ t-rex -a octopus -o stratum+tcp://cfx-eu1.nanopool.org:17777 -u cfx:aajauymfc0cp
 * **ALPH-woolypooly**</br>
 ```
 t-rex -a blake3 -o stratum+tcp://pool.woolypooly.com:3106 -u 1qUuxVuXN2Pk4nnYTbL4qihjLWyRkVMQVYQDAajCcuPq -p x -w rig0
+```
+
+* **ALPH-herominers**</br>
+```
+t-rex -a blake3 -o stratum+tcp://de.alephium.herominers.com:1199 -u 1qUuxVuXN2Pk4nnYTbL4qihjLWyRkVMQVYQDAajCcuPq -p x -w rig0
 ```
 
 * **RVN-2miners**</br>
