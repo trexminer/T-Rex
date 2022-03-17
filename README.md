@@ -55,14 +55,9 @@ Full list of command line options:
                                    "<algo>" can be one of: "a1" (first algorithm), "a2" (second algorithm), "a12" (both - dual mining)
                                    "<tuning coefficient>" is optional, and can be either
                                          "rXX" ("dual ratio" coefficient set to XX), or
+                                         "rXX:lrYY" ("dual ratio" coefficient set to XX, "LHR dual ratio" coefficient set to YY), or
                                          "hXX" (primary algo hashrate percentage XX).
-                                   Examples:
-                                   a12:r15 - GPU will mine both algorithms with dual ratio 15
-                                             (second algo hashrate is 15x primary algo hashrate)
-                                   a12:h95 - GPU will mine both algorithms maintaining primary algorithm hashrate at
-                                             about 95% of the maximum
-                                   a1      - GPU will only mine the primary algorithm (single mode)
-                                   a2      - GPU will only mine the secondary algorithm (single mode)
+                                   See dual mining guide for more details.
         --profit-per-mh            Estimated profitability of the algorithms in dual mining mode per 1MH of hashrate.
                                    Used for fine-tuning algo1/algo2 proportion, the miner will try to maximise the earnings.
                                    Format: <profit_algo1>:<profit_algo2>.
