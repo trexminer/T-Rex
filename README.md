@@ -71,7 +71,7 @@ Full list of command line options:
                                    74 - recommended starting value for most LHR cards
                                    Can be set for each GPU separately, e.g.
                                    "lhr-tune": "0,0,74.5,0" - this will set LHR tuning value to 74.5 for the third GPU.
-        --lhr-autotune-mode        [Ethash, Autolykos2] LHR auto-tune mode (default: full). Valid values:
+        --lhr-autotune-mode        [Ethash, Autolykos2] LHR auto-tune mode (default: down). Valid values:
                                    off  - auto-tune is disabled. LHR tune value is fixed during mining, and will not change
                                           no matter how often LHR lock is detected
                                    down - LHR tune value will decrease if the miner detects LHR lock
