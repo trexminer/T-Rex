@@ -354,6 +354,7 @@ t-rex -a etchash -o stratum+tcp://pool.woolypooly.com:35000 -u 0x0924EF9ecBcC128
 
 * **ETH-2miners**</br>
 ```
+@cd /d "%~dp0"
 t-rex -a ethash -o stratum+tcp://eth.2miners.com:2020 -u 0x357F8600F2AA4fc705D8c8F8bB01c249790802D6 -p x -w rig0
 ```
 
@@ -364,36 +365,43 @@ t-rex -a ethash -o stratum+ssl://eth-us-east.flexpool.io:5555 -u 0x357F8600F2AA4
 
 * **ETH-ethproxy**</br>
 ```
+@cd /d "%~dp0"
 t-rex -a ethash -o stratum+http://127.0.0.1:8080
 ```
 
 * **ETH-nanopool**</br>
 ```
+@cd /d "%~dp0"
 t-rex -a ethash -o stratum+tcp://eth-eu1.nanopool.org:9999 -u 0x357F8600F2AA4fc705D8c8F8bB01c249790802D6.rig0/your@email.org -p x
 ```
 
 * **ETH-ethermine**</br>
 ```
+@cd /d "%~dp0"
 t-rex -a ethash -o stratum+tcp://eu1.ethermine.org:4444 -u 0x357F8600F2AA4fc705D8c8F8bB01c249790802D6 -p x -w rig0
 ```
 
 * **ETH-miningpoolhub**</br>
 ```
+@cd /d "%~dp0"
 t-rex -a ethash -o stratum2+tcp://europe.ethash-hub.miningpoolhub.com:20535 -u somaton.gtx1080 -p x
 ```
 
 * **ETH-miningrigrentals**</br>
 ```
+@cd /d "%~dp0"
 t-rex -a ethash -o stratum+tcp://eu-ru01.miningrigrentals.com:3344 -u wasya89.165854 -p x
 ```
 
 * **ETH-woolypooly**</br>
 ```
+@cd /d "%~dp0"
 t-rex -a ethash -o stratum+tcp://pool.woolypooly.com:3096 -u 0x357F8600F2AA4fc705D8c8F8bB01c249790802D6 -p x -w rig0
 ```
 
 * **ETH-flexpool**</br>
 ```
+@cd /d "%~dp0"
 t-rex -a ethash -o stratum+ssl://eth-us-east.flexpool.io:5555 -u 0x357F8600F2AA4fc705D8c8F8bB01c249790802D6 -p x -w rig0
 ```
 
