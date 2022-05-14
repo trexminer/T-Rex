@@ -263,7 +263,7 @@ Full list of command line options:
                                    which translates to
                                       GPU #0: set fan speed to 45%
                                       GPU #1: maintain GPU core temperature at 67C
-                                      GPU #2: maintain GPU memory temperature at 90C
+                                      GPU #2: maintain GPU memory temperature at 95C
                                       GPU #3: maintain GPU core temperature at 69C
                                               with the fan speed limited to [45%, 100%] range
                                       GPU #4: maintain GPU memory temperature at 90C
