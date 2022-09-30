@@ -1,4 +1,4 @@
-# T-Rex NVIDIA GPU miner (Ethash / Autolykos2 / Kawpow / Blake3 / Octopus / Firopow / MTP)
+# T-Rex NVIDIA GPU miner (Ethash / Etchash / Autolykos2 / Kawpow / Blake3 / Octopus / Firopow)
 
 ## Overview
 
@@ -30,9 +30,9 @@ Full list of command line options:
                                    progpow-veriblock
                                    progpowz
                                    tensority
-        --coin                     [Ethash, ProgPOW] Set coin name.
+        --coin                     Set coin name.
                                    Helps avoid DAG rebuilds when switching back from a dev fee session.
-                                   Example: "eth" for Ethereum, "eth+zil" for Ethereum+Zilliqa mining.
+                                   Example: "etc" for Ethereum Classic, "etc+zil" for Ethereum Classic + Zilliqa mining.
         --extra-dag-epoch          Allocate extra DAG at GPU for specified epoch. Can be useful for dual mining
                                    of coins like Zilliqa (ZIL). (eg: --extra-dag-epoch 0)
                                    Can be set for each GPU separately by using comma separated list of values
@@ -292,29 +292,34 @@ Full list of command line options:
 ```
 
 ### Examples
-* **LHR-unlock-dual-ETH+ERGO**</br>
+* **LHR-unlock-dual-ETHW+ERGO**</br>
 ```
-t-rex -a ethash --dual-algo autolykos2 -o stratum+tcp://eu1.ethermine.org:4444 -u 0x357F8600F2AA4fc705D8c8F8bB01c249790802D6 -p x -w rig0 --url2 stratum+tcp://pool.woolypooly.com:3100 --user2 9gpNWA3LVic14cMmWHmKGZyiGqrxPaSEvGsdyt7jt2DDAWDQyc9.rig0 --pass2 x
-```
-
-* **LHR-unlock-dual-ETH+FIRO**</br>
-```
-t-rex -a ethash --dual-algo firopow -o stratum+tcp://pool.woolypooly.com:3096 -u 0x357F8600F2AA4fc705D8c8F8bB01c249790802D6 -p x -w rig0 --url2 stratum+tcp://firo.2miners.com:8181 --user2 aBR3GY8eBKvEwjrVgNgSWZsteJPpFDqm6U.rig0 --pass2 x
+t-rex -a ethash --dual-algo autolykos2 -o stratum+tcp://ethw.2miners.com:2020 -u 0x4121c43205D4244cb6395B2318d711a73fc1a6DE -p x -w rig0 --url2 stratum+tcp://pool.woolypooly.com:3100 --user2 9gpNWA3LVic14cMmWHmKGZyiGqrxPaSEvGsdyt7jt2DDAWDQyc9.rig0 --pass2 x
 ```
 
-* **LHR-unlock-dual-ETH+RVN**</br>
+* **LHR-unlock-dual-ETHW+FIRO**</br>
 ```
-t-rex -a ethash --dual-algo kawpow -o stratum+tcp://eth.2miners.com:2020 -u 0x357F8600F2AA4fc705D8c8F8bB01c249790802D6 -p x -w rig0 --url2 stratum+tcp://rvn.2miners.com:6060 --user2 RNm4LMBGyfH8ddCGvncQKrMtxEydxwhUJL.rig0 --pass2 x
-```
-
-* **LHR-unlock-dual-ETH+CFX**</br>
-```
-t-rex -a ethash --dual-algo octopus -o stratum+ssl://eth-us-east.flexpool.io:5555 -u 0x357F8600F2AA4fc705D8c8F8bB01c249790802D6 -p x -w rig0 --url2 stratum+tcp://pool.woolypooly.com:3094 --user2 cfx:aajauymfc0cpd4aj91wmfyd150avfg3fmym9j2xrh8.rig0 --pass2 x
+t-rex -a ethash --dual-algo firopow -o stratum+tcp://pool.woolypooly.com:3096 -u 0x4121c43205D4244cb6395B2318d711a73fc1a6DE -p x -w rig0 --url2 stratum+tcp://firo.2miners.com:8181 --user2 aBR3GY8eBKvEwjrVgNgSWZsteJPpFDqm6U.rig0 --pass2 x
 ```
 
-* **ETH+ALPH**</br>
+* **LHR-unlock-dual-ETHW+RVN**</br>
 ```
-t-rex -a ethash --dual-algo blake3 -o stratum+tcp://eth.2miners.com:2020 -u 0x357F8600F2AA4fc705D8c8F8bB01c249790802D6 -p x -w rig0 --url2 stratum+tcp://de.alephium.herominers.com:1199 --user2 1qUuxVuXN2Pk4nnYTbL4qihjLWyRkVMQVYQDAajCcuPq --pass2 x
+t-rex -a ethash --dual-algo kawpow -o stratum+tcp://ethw.2miners.com:2020 -u 0x4121c43205D4244cb6395B2318d711a73fc1a6DE -p x -w rig0 --url2 stratum+tcp://rvn.2miners.com:6060 --user2 RNm4LMBGyfH8ddCGvncQKrMtxEydxwhUJL.rig0 --pass2 x
+```
+
+* **LHR-unlock-dual-ETHW+CFX**</br>
+```
+t-rex -a ethash --dual-algo octopus -o stratum+tcp://pool.woolypooly.com:3096 -u 0x4121c43205D4244cb6395B2318d711a73fc1a6DE -p x -w rig0 --url2 stratum+tcp://pool.woolypooly.com:3094 --user2 cfx:aajauymfc0cpd4aj91wmfyd150avfg3fmym9j2xrh8.rig0 --pass2 x
+```
+
+* **ETHW+ALPH**</br>
+```
+t-rex -a ethash --dual-algo blake3 -o stratum+tcp://ethw.2miners.com:2020 -u 0x4121c43205D4244cb6395B2318d711a73fc1a6DE -p x -w rig0 --url2 stratum+tcp://de.alephium.herominers.com:1199 --user2 1qUuxVuXN2Pk4nnYTbL4qihjLWyRkVMQVYQDAajCcuPq --pass2 x
+```
+
+* **ETC+ALPH**</br>
+```
+t-rex -a etchash --dual-algo blake3 -o stratum+tcp://etc.2miners.com:1010 -u 0x0924EF9ecBcC1287047cAFd2EAD3A133313eE6A2 -p x -w rig0 --url2 stratum+tcp://de.alephium.herominers.com:1199 --user2 1qUuxVuXN2Pk4nnYTbL4qihjLWyRkVMQVYQDAajCcuPq --pass2 x
 ```
 
 * **ERGO-nanopool**</br>
@@ -337,9 +342,14 @@ t-rex -a autolykos2 -o stratum+tcp://pool.woolypooly.com:3100 -u 9gpNWA3LVic14cM
 t-rex -a autolykos2 -o stratum+tcp://erg.2miners.com:8888 -u 9gpNWA3LVic14cMmWHmKGZyiGqrxPaSEvGsdyt7jt2DDAWDQyc9.rig0 -p x
 ```
 
-* **ETH+ZIL-ezil**</br>
+* **ETHW+ZIL-ezil**</br>
 ```
-t-rex -a ethash --coin eth+zil -o stratum+tcp://eth.2miners.com:2020 -u 0x357F8600F2AA4fc705D8c8F8bB01c249790802D6 --url2 stratum+tcp://eu.ezil.me:5555 --user2 0x357F8600F2AA4fc705D8c8F8bB01c249790802D6.zil1yn92lnkkfsn0s2hlvfdmz6y2yhpqm98vng38s9.WORKER --extra-dag-epoch 0
+t-rex -a ethash --coin eth+zil -o stratum+tcp://ethw.2miners.com:2020 -u 0x4121c43205D4244cb6395B2318d711a73fc1a6DE --url2 stratum+tcp://eu.ezil.me:4444 --user2 0x4121c43205D4244cb6395B2318d711a73fc1a6DE.zil1yn92lnkkfsn0s2hlvfdmz6y2yhpqm98vng38s9.WORKER --extra-dag-epoch 0
+```
+
+* **ETC+ZIL-ezil**</br>
+```
+t-rex -a etchash --coin etc+zil -o stratum+tcp://eu1-etc.ethermine.org:4444 -u 0x0924EF9ecBcC1287047cAFd2EAD3A133313eE6A2 --url2 stratum+tcp://eu.ezil.me:4444 --user2 0x0924EF9ecBcC1287047cAFd2EAD3A133313eE6A2.zil1yn92lnkkfsn0s2hlvfdmz6y2yhpqm98vng38s9.WORKER --extra-dag-epoch 0
 ```
 
 * **ETC-2miners**</br>
@@ -352,49 +362,14 @@ t-rex -a etchash -o stratum+tcp://etc.2miners.com:1010 -u 0x0924EF9ecBcC1287047c
 t-rex -a etchash -o stratum+tcp://pool.woolypooly.com:35000 -u 0x0924EF9ecBcC1287047cAFd2EAD3A133313eE6A2 -p x -w rig0
 ```
 
-* **ETH-2miners**</br>
+* **ETC-ISP-hidden-mode**</br>
 ```
-t-rex -a ethash -o stratum+tcp://eth.2miners.com:2020 -u 0x357F8600F2AA4fc705D8c8F8bB01c249790802D6 -p x -w rig0
-```
-
-* **ETH-ISP-hidden-mode**</br>
-```
-t-rex -a ethash -o stratum+ssl://eth-us-east.flexpool.io:5555 -u 0x357F8600F2AA4fc705D8c8F8bB01c249790802D6 -p x -w rig0 --no-sni --dns-https-server 1.1.1.1
+t-rex -a etchash -o stratum+tcp://eu1-etc.ethermine.org:4444 -u 0x0924EF9ecBcC1287047cAFd2EAD3A133313eE6A2 -p x -w rig0 --no-sni --dns-https-server 1.1.1.1
 ```
 
-* **ETH-ethproxy**</br>
+* **ETHW-ethproxy**</br>
 ```
 t-rex -a ethash -o stratum+http://127.0.0.1:8080
-```
-
-* **ETH-nanopool**</br>
-```
-t-rex -a ethash -o stratum+tcp://eth-eu1.nanopool.org:9999 -u 0x357F8600F2AA4fc705D8c8F8bB01c249790802D6.rig0/your@email.org -p x
-```
-
-* **ETH-ethermine**</br>
-```
-t-rex -a ethash -o stratum+tcp://eu1.ethermine.org:4444 -u 0x357F8600F2AA4fc705D8c8F8bB01c249790802D6 -p x -w rig0
-```
-
-* **ETH-miningpoolhub**</br>
-```
-t-rex -a ethash -o stratum2+tcp://europe.ethash-hub.miningpoolhub.com:20535 -u somaton.gtx1080 -p x
-```
-
-* **ETH-miningrigrentals**</br>
-```
-t-rex -a ethash -o stratum+tcp://eu-ru01.miningrigrentals.com:3344 -u wasya89.165854 -p x
-```
-
-* **ETH-woolypooly**</br>
-```
-t-rex -a ethash -o stratum+tcp://pool.woolypooly.com:3096 -u 0x357F8600F2AA4fc705D8c8F8bB01c249790802D6 -p x -w rig0
-```
-
-* **ETH-flexpool**</br>
-```
-t-rex -a ethash -o stratum+ssl://eth-us-east.flexpool.io:5555 -u 0x357F8600F2AA4fc705D8c8F8bB01c249790802D6 -p x -w rig0
 ```
 
 * **CFX-woolypooly**</br>
@@ -437,9 +412,9 @@ t-rex -a kawpow -o stratum+tcp://pool.woolypooly.com:55555 -u RNm4LMBGyfH8ddCGvn
 t-rex -a progpow --coin sero -o stratum+tcp://pool2.sero.cash:8808 -u JCbZnEb8XtWV814QWRpDcDxpQpXZXw4ARneAtwXNYdd3reuo4xQDcuZivopA761QnQyfMermHR9Mpi156F5n7ez9tv75Wt7vWbHXtuyZsQVWLbKNHnZgwcXbR2yZmbw89WT -p x -w rig0
 ```
 
-* **VBK-luckypool**</br>
+* **VBK-reb0rn**</br>
 ```
-t-rex -a progpow-veriblock -o stratum+tcp://vbk.luckypool.io:9501 -u V5h6udgGe6eL4M9cYGi776WCP75URm -p x -w rig0
+t-rex -a progpow-veriblock -o stratum+tcp://vbk-reb0rn.ddns.net:8502 -u V5h6udgGe6eL4M9cYGi776WCP75URm -p x -w rig0
 ```
 
 * **VEIL-woolypooly**</br>
