@@ -292,26 +292,6 @@ Full list of command line options:
 ```
 
 ### Examples
-* **LHR-unlock-dual-ETHW+ERGO**</br>
-```
-t-rex -a ethash --dual-algo autolykos2 -o stratum+tcp://ethw.2miners.com:2020 -u 0x4121c43205D4244cb6395B2318d711a73fc1a6DE -p x -w rig0 --url2 stratum+tcp://pool.woolypooly.com:3100 --user2 9gpNWA3LVic14cMmWHmKGZyiGqrxPaSEvGsdyt7jt2DDAWDQyc9.rig0 --pass2 x
-```
-
-* **LHR-unlock-dual-ETHW+FIRO**</br>
-```
-t-rex -a ethash --dual-algo firopow -o stratum+tcp://pool.woolypooly.com:3096 -u 0x4121c43205D4244cb6395B2318d711a73fc1a6DE -p x -w rig0 --url2 stratum+tcp://firo.2miners.com:8181 --user2 aBR3GY8eBKvEwjrVgNgSWZsteJPpFDqm6U.rig0 --pass2 x
-```
-
-* **LHR-unlock-dual-ETHW+RVN**</br>
-```
-t-rex -a ethash --dual-algo kawpow -o stratum+tcp://ethw.2miners.com:2020 -u 0x4121c43205D4244cb6395B2318d711a73fc1a6DE -p x -w rig0 --url2 stratum+tcp://rvn.2miners.com:6060 --user2 RNm4LMBGyfH8ddCGvncQKrMtxEydxwhUJL.rig0 --pass2 x
-```
-
-* **LHR-unlock-dual-ETHW+CFX**</br>
-```
-t-rex -a ethash --dual-algo octopus -o stratum+tcp://pool.woolypooly.com:3096 -u 0x4121c43205D4244cb6395B2318d711a73fc1a6DE -p x -w rig0 --url2 stratum+tcp://pool.woolypooly.com:3094 --user2 cfx:aajauymfc0cpd4aj91wmfyd150avfg3fmym9j2xrh8.rig0 --pass2 x
-```
-
 * **ETHW+ALPH**</br>
 ```
 t-rex -a ethash --dual-algo blake3 -o stratum+tcp://ethw.2miners.com:2020 -u 0x4121c43205D4244cb6395B2318d711a73fc1a6DE -p x -w rig0 --url2 stratum+tcp://de.alephium.herominers.com:1199 --user2 1qUuxVuXN2Pk4nnYTbL4qihjLWyRkVMQVYQDAajCcuPq --pass2 x
