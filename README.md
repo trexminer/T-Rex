@@ -337,6 +337,11 @@ t-rex -a etchash --coin etc+zil -o stratum+tcp://eu1-etc.ethermine.org:4444 -u 0
 t-rex -a etchash -o stratum+tcp://etc.2miners.com:1010 -u 0x0924EF9ecBcC1287047cAFd2EAD3A133313eE6A2 -p x -w rig0
 ```
 
+* **ETC-ethermine**</br>
+```
+t-rex -a etchash -o stratum+tcp://eu1-etc.ethermine.org:4444 -u 0x1f75eccd8fbddf057495b96669ac15f8e296c2cd -p x -w rig0
+```
+
 * **ETC-woolypooly**</br>
 ```
 t-rex -a etchash -o stratum+tcp://pool.woolypooly.com:35000 -u 0x0924EF9ecBcC1287047cAFd2EAD3A133313eE6A2 -p x -w rig0
