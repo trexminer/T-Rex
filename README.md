@@ -302,6 +302,11 @@ t-rex -a ethash --dual-algo blake3 -o stratum+tcp://ethw.2miners.com:2020 -u 0x4
 t-rex -a etchash --dual-algo blake3 -o stratum+tcp://etc.2miners.com:1010 -u 0x0924EF9ecBcC1287047cAFd2EAD3A133313eE6A2 -p x -w rig0 --url2 stratum+tcp://de.alephium.herominers.com:1199 --user2 1qUuxVuXN2Pk4nnYTbL4qihjLWyRkVMQVYQDAajCcuPq --pass2 x
 ```
 
+* **ETHW-kryptex-pool**</br>
+```
+t-rex -a ethash -o stratum+tcp://ethw.kryptex.network:7777 -u 0x4121c43205D4244cb6395B2318d711a73fc1a6DE -p x
+```
+
 * **ERGO-nanopool**</br>
 ```
 t-rex -a autolykos2 -o stratum+tcp://ergo-eu1.nanopool.org:11111 -u 9gpNWA3LVic14cMmWHmKGZyiGqrxPaSEvGsdyt7jt2DDAWDQyc9.rig0/your@email.org -p x
@@ -322,6 +327,11 @@ t-rex -a autolykos2 -o stratum+tcp://pool.woolypooly.com:3100 -u 9gpNWA3LVic14cM
 t-rex -a autolykos2 -o stratum+tcp://erg.2miners.com:8888 -u 9gpNWA3LVic14cMmWHmKGZyiGqrxPaSEvGsdyt7jt2DDAWDQyc9.rig0 -p x
 ```
 
+* **ERGO-kryptex-pool**</br>
+```
+t-rex -a autolykos2 -o stratum+tcp://erg.kryptex.network:7777 -u 9gpNWA3LVic14cMmWHmKGZyiGqrxPaSEvGsdyt7jt2DDAWDQyc9.rig0 -p x
+```
+
 * **ETHW+ZIL-ezil**</br>
 ```
 t-rex -a ethash --coin eth+zil -o stratum+tcp://ethw.2miners.com:2020 -u 0x4121c43205D4244cb6395B2318d711a73fc1a6DE --url2 stratum+tcp://eu.ezil.me:4444 --user2 0x4121c43205D4244cb6395B2318d711a73fc1a6DE.zil1yn92lnkkfsn0s2hlvfdmz6y2yhpqm98vng38s9.WORKER --extra-dag-epoch 0
@@ -340,6 +350,11 @@ t-rex -a etchash -o stratum+tcp://etc.2miners.com:1010 -u 0x0924EF9ecBcC1287047c
 * **ETC-woolypooly**</br>
 ```
 t-rex -a etchash -o stratum+tcp://pool.woolypooly.com:35000 -u 0x0924EF9ecBcC1287047cAFd2EAD3A133313eE6A2 -p x -w rig0
+```
+
+* **ETC-kryptex-pool**</br>
+```
+t-rex -a etchash -o stratum+tcp://etc.kryptex.network:7777 -u 0x0924EF9ecBcC1287047cAFd2EAD3A133313eE6A2 -p x -w rig0
 ```
 
 * **ETC-ISP-hidden-mode**</br>
@@ -385,6 +400,11 @@ t-rex -a kawpow -o stratum+tcp://stratum.ravenminer.com:3838 -u RNm4LMBGyfH8ddCG
 * **RVN-woolypooly**</br>
 ```
 t-rex -a kawpow -o stratum+tcp://pool.woolypooly.com:55555 -u RNm4LMBGyfH8ddCGvncQKrMtxEydxwhUJL.rig -p x
+```
+
+* **RVN-kryptex-pool**</br>
+```
+t-rex -a kawpow -o stratum+tcp://rvn.kryptex.network:7777 -u RNm4LMBGyfH8ddCGvncQKrMtxEydxwhUJL.rig -p x
 ```
 
 * **SERO-serocash**</br>
