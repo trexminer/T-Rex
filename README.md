@@ -321,6 +321,10 @@ t-rex -a autolykos2 -o stratum+tcp://pool.woolypooly.com:3100 -u 9gpNWA3LVic14cM
 ```
 t-rex -a autolykos2 -o stratum+tcp://erg.2miners.com:8888 -u 9gpNWA3LVic14cMmWHmKGZyiGqrxPaSEvGsdyt7jt2DDAWDQyc9.rig0 -p x
 ```
+* **ERGO-okminer**</br>
+```
+t-rex.exe -a autolykos2 -o stratum+tcp://erg.okminer-pool.com:1680 -u wallet.worker -p x
+```
 
 * **ETHW+ZIL-ezil**</br>
 ```
@@ -341,6 +345,10 @@ t-rex -a etchash -o stratum+tcp://etc.2miners.com:1010 -u 0x0924EF9ecBcC1287047c
 ```
 t-rex -a etchash -o stratum+tcp://pool.woolypooly.com:35000 -u 0x0924EF9ecBcC1287047cAFd2EAD3A133313eE6A2 -p x -w rig0
 ```
+* **ETC-okminer**</br>
+```
+t-rex.exe -a etchash -o stratum+tcp://etc.okminer-pool.com:1777 -u wallet.worker -p x rig0
+```
 
 * **ETC-ISP-hidden-mode**</br>
 ```
@@ -360,6 +368,11 @@ t-rex -a octopus -o stratum+tcp://pool.woolypooly.com:3094 -u cfx:aajauymfc0cpd4
 * **CFX-nanopool**</br>
 ```
 t-rex -a octopus -o stratum+tcp://cfx-eu1.nanopool.org:17777 -u cfx:aajauymfc0cpd4aj91wmfyd150avfg3fmym9j2xrh8.rig0/your@email.org -p x
+```
+
+* **CFX-okminer**</br>
+```
+t-rex.exe -a octopus -o stratum+tcp://cfx.okminer-pool.com:1400 -u wallet.worker -p x
 ```
 
 * **ALPH-woolypooly**</br>
@@ -385,6 +398,11 @@ t-rex -a kawpow -o stratum+tcp://stratum.ravenminer.com:3838 -u RNm4LMBGyfH8ddCG
 * **RVN-woolypooly**</br>
 ```
 t-rex -a kawpow -o stratum+tcp://pool.woolypooly.com:55555 -u RNm4LMBGyfH8ddCGvncQKrMtxEydxwhUJL.rig -p x
+```
+
+* **RVN-okminer**</br>
+```
+t-rex.exe -a kawpow -o stratum+tcp://rvn.okminer-pool.com:1997 -u wallet.worker -p x
 ```
 
 * **SERO-serocash**</br>
